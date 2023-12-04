@@ -73,7 +73,7 @@ if(isset($_SESSION['cart'])){
         ?> 
             <div class="product-widget">
                 <div class="product-img">
-                    <img src="./img/<?php echo $sp['image'] ?>" alt="">
+                    <img src="/img/<?php echo $sp['image'] ?>" alt="">
                 </div>
                 <div class="product-body">
                     <h3 class="product-name"><a href="#"><?php echo $sp['name'] ?></a></h3>

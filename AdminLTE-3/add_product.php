@@ -1,14 +1,22 @@
-<?php 
-// In ra cai form
+<!DOCTYPE html>
+<html lang="en">
 
-// Cho admin nhap vo
-// an nut button 
-// kiem tra $_POST
-// lay data dan vao trong bien
-// tao ham insert 
-// tra ve trang dashboard
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Dashboard </title>
 
-?>
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 <?php
 require "config.php";
 require "models/db.php";
@@ -19,12 +27,16 @@ require "models/products.php";
 $protypes = new Protypes;
 $getAllprotypes = $protypes->getAllprotypes();
 
+$manufacture = new Manufacture();
+$getAllmanufacture = $manufacture->getAllmanufacture();
+
+
 if(isset($_POST['submit'])){
     $name = $_POST['name'];
     $manu_id = $_POST['manu_id'];
     $type_id = $_POST['type_id'];
     $price = $_POST['price'];
-    $img = $_POST['img'];
+    $img = $_POST['image'];
     $description = $_POST['description'];
     // $feature = $_POST['feature'];
     $feature = $_POST['feature'];
@@ -38,84 +50,104 @@ if(isset($_POST['submit'])){
 
 }
 
-
-
-
-
 ?>
+<div class="flex">
+    <div class="w-1/7">
+        <?php
+        include('slideBar.php');
+        ?>
+    </div>
+    <div class="w-full container cs_container ">
+        <form action="" method="post" class="m-10">
 
-<div class="container cs_container ">
-  <form action="" method="post">
+            <!-- name -->
+            <div class="mb-6">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-black">Name</label>
+                <input type="text" id="name" name="name"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"
+                    placeholder="Nhập tên sản phẩm" required>
+            </div>
 
-   
+            <!-- description -->
+            <div class="mb-6">
+                <label for="description"
+                    class="block mb-2 text-sm font-medium text-gray-900 text-black">Description</label>
+                <input type="text" id="description" name="description"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"
+                    placeholder="Nhập mô tả sản phẩm" required>
+            </div>
 
-    <label for="lname">nhập tên sản phảm </label>
-    <input type="text" id="lname" name="name" placeholder="Your last name.." >
+            <!-- hình ảnh -->
+            <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-900" for="img-product">Upload
+                    Image</label>
+                <div class="flex items-center ">
+                    <div class="mt-1 text-sm text-gray-500 text-gray-300" id="user_avatar_help">
+                        <div class="relative hidden w-28  h-28 object-contain mr-3 rounded-full md:block">
+                            <img class="object-contain w-full h-full " alt="" loading="lazy" id="output"
+                                src="./image/imageDefault.png" />
+                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                            </div>
+                        </div>
+                    </div>
+                    <input id="image" type="file" name="image" accept="image/*" onchange="loadFile(event)"
+                        class=" p-2 block h-12 w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-white  focus:outline-none border-gray-600 placeholder-gray-400"
+                        aria-describedby="user_avatar_help">
+                </div>
+                <div class="mt-1 text-sm text-black" id="user_avatar_help">Tải hình ảnh sản phẩm lên</div>
+            </div>
 
-    <label for="lname">nhập manu_id sản phảm </label>
-    <input type="text" id="lname" name="manu_id" placeholder="Your last name..">
+            <!-- price -->
+            <div class="mb-6">
+                <label for="price" class="block mb-2 text-sm font-medium text-gray-900 text-black">Price</label>
+                <input type="number" id="price" name="price"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"
+                    placeholder="Nhập giá sản phẩm" required>
+            </div>
 
-    <label for="lname">nhập type_id sản phảm </label>
-    <input type="text" id="lname" name="type_id" placeholder="Your last name..">
+            <!-- Protypes -->
+            <div class="mb-6">
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 text-black">Choose
+                    Protypes classification</label>
+                <select id="categorie" name="type_id"
+                    class="bg-white border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500">
+                    <?php
+                  foreach ($getAllprotypes as $value) :
+                ?>
+                    <option value="<?php echo $value['type_id'] ?>"><?php echo $value['type_name'] ?></option>
+                    <?php
+                  endforeach;
+                ?>
+                </select>
+            </div>
 
-    <label for="lname">nhập price sản phảm </label>
-    <input type="text" id="lname" name="price" placeholder="Your last name..">
+            <div class="mb-6">
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 text-black">Choose
+                    manufacture classification</label>
+                <select id="manufacture" name="manu_id"
+                    class="bg-white border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 border-gray-600 placeholder-gray-400 text-black focus:ring-blue-500 focus:border-blue-500">
+                    <?php 
+                  foreach ($getAllmanufacture as $value) :
+                ?>
+                    ?>
+                    <option value="<?php echo $value['manu_id'] ?>"><?php echo $value['manu_name'] ?></option>
+                    <?php
+                  endforeach;
+                ?>
+                </select>
+            </div>
 
-    <label for="lname">nhập link img  sản phảm </label>
-    <input type="text" id="lname" name="img" placeholder="Your last name..">
-
-    <label for="lname">nhập description sản phảm </label>
-    <input type="text" id="lname" name="description" placeholder="Your last name..">
-
-    <label for="lname">nhập feature sản phảm </label>
-    <input type="checkbox" id="lname" name="feature" placeholder="Your last name..">
-
-    
-    <br>
-
-   
-
-    <input name="submit" type="submit" value="Submit">
-
-  </form>
+            <div class="flex items-center">
+                <label for="checked-checkbox" class="mb-0 text-sm font-medium text-black mr-2">Checked
+                    state</label>
+                <input checked id="checked-checkbox" type="checkbox" value="" name="feature"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+            </div>
+            <div class="flex justify-end">
+                <button name="submit" type="submit" value="Submit"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mt-2">Add
+                    Product</button>
+            </div>
+        </form>
+    </div>
 </div>
-<style>
-
-.cs_container input[type=text], select, textarea {
-  width: 100%; /* Full width */
-  padding: 12px; /* Some padding */ 
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
-}
-
-/* Style the submit button with a specific background color etc */
-.cs_container input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-}
-
-/* When moving the mouse over the submit button, add a darker green color */
-.cs_container input[type=submit]:hover {
-  background-color: #45a049;
-}
-
-/* Add a background color and some padding around the form */
-.cs_container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-    width: 50%;
-    margin: auto;
-}
-
-
-</style>

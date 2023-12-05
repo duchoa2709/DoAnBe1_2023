@@ -74,8 +74,6 @@ public function deleteProducts($x)
 
 public function insertProducts ($name , $manu_id , $type_id , $price , $image , $description , $feature , $created_at )
 {
-    
-    //insert into products values("toan" , 1 , 1, 34324 , "But.jpg","dsfsdf" , 1 , "2022-10-26 05:50:59");
     $sql = self::$connection->prepare("insert into products (name , manu_id ,type_id , price , image ,description ,feature,created_at  ) values(? , ? , ?, ? , ?,? , ? , ?)");
     $sql->bind_param("siiissis" , $name , $manu_id , $type_id , $price , $image , $description , $feature , $created_at );
     $sql->execute(); //return an object
@@ -84,15 +82,10 @@ public function insertProducts ($name , $manu_id , $type_id , $price , $image , 
 }
 
 public function updateProducts ($id , $name , $manu_id , $type_id , $price , $image , $description , $feature , $created_at )
-{   
-   
-    //insert into products values("toan" , 1 , 1, 34324 , "But.jpg","dsfsdf" , 1 , "2022-10-26 05:50:59");
+{  
     $sql = self::$connection->prepare("update products  set name = ? ,  manu_id = ? , type_id = ? , price = ? , image = ? , description = ? , feature = ? , created_at = ?  where id = ? ");
     $sql->bind_param("siiissisi" , $name , $manu_id , $type_id, $price , $image, $description , $feature, $created_at ,  $id );
-    $sql->execute(); //return an object
-    
-   
-   
+    $sql->execute(); 
 }
 
 public function insertUsersOrder ($name_user , $tel_user , $email_user , $address_user )
@@ -109,8 +102,6 @@ public function insertUsersOrder ($name_user , $tel_user , $email_user , $addres
 
 public function insertProductOrder ($id_detail ,$name , $price , $qty )
 {
-    
-    //insert into products values("toan" , 1 , 1, 34324 , "But.jpg","dsfsdf" , 1 , "2022-10-26 05:50:59");
     $sql = self::$connection->prepare(" insert into detail_product (id_detail , name_product , qty_product , price_product )
     values(?, ? , ? , ? );");
     $sql->bind_param("isii" , $id_detail ,  $name , $price , $qty  );
@@ -118,12 +109,6 @@ public function insertProductOrder ($id_detail ,$name , $price , $qty )
   
    
 }
-
-
-
-
-
-
 
 }
 ?>

@@ -1,111 +1,135 @@
-<?php  session_start();
+<?php
+session_start();
 require "config.php";
 require "models/db.php";
 require "models/user.php";
-
-$user = new User();
-
-
 
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <title>Login V3</title>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="./public/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="./public/css/util.css">
+    <link rel="stylesheet" type="text/css" href="./public/css/main.css">
+    <!--===============================================================================================-->
 </head>
+
 <body>
-<section class="vh-100">
-  <div class="container-fluid h-custom">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-9 col-lg-6 col-xl-5">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-          class="img-fluid" alt="Sample image">
-      </div>
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-       
-        <form action="" method="POST">
-          <!-- Email input -->
-                      <div class="form-outline mb-4 mt-5">
 
-                      <label class="form-label" for="form3Example3">Username</label>
-                        <input name="username" type="text" id="form3Example3" class="form-control form-control-lg"
-                          />
-                        
-                      </div>
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('./public/images/bg-01.jpg');">
+            <div class="wrap-login100">
+                <form class="login100-form validate-form" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>"
+                    name="login">
+                    <span class="login100-form-logo">
+                        <i class="zmdi zmdi-landscape"></i>
+                    </span>
 
-                      <!-- Password input -->
-                      <div class="form-outline mb-3">
-                      <label class="form-label" for="form3Example4">Password</label>
-                        <input name="password" type="password" id="form3Example4" class="form-control form-control-lg"
-                          />
-                      
-                      </div>
-                      <?php 
-                      if (isset($_POST['submit'])) {
+                    <span class="login100-form-title p-b-34 p-t-27">
+                        Log in
+                    </span>
 
-                        $username = $_POST['username'];
-                        $password = $_POST['password'];
-                        if($user->checkLogon($username , $password)){
-                          if($username == "admin" && $password == "12345"){
-                            header('location:AdminLTE-3/index.php');
-                          }
-                          else{
-                            $_SESSION['user'] = $username;
-                            header('location:index.php');
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                        <input class="input100" type="text" name="username" placeholder="Username">
+                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    </div>
 
-                          }
-                           
-                  
-                        }
-                        else{
-                           echo "<p class='text_red' > Sai Username Hoặc Password </p>";
-                        }
-                        
-                        
-                        }
-                      ?>
-                      
-                    
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <input class="input100" type="password" name="pass" placeholder="Password">
+                        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    </div>
 
-                      <div class="d-flex justify-content-between align-items-center">
-                        <!-- Checkbox -->
-                        <div class="form-check mb-0">
-                          <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                          <label class="form-check-label" for="form2Example3">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                        <label class="label-checkbox100" for="ckb1">
                             Remember me
-                          </label>
-                        </div>
-                        <a href="#!" class="text-body">Forgot password?</a>
-                      </div>
+                        </label>
+                    </div>
 
-                      <div class="text-center text-lg-start mt-4 pt-2">
-                      
-                          <input name="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" type="submit" value="Login">
+                    <?php
+                        if (isset($_POST['login'])) {
+                            $username = htmlspecialchars($_POST['username']);
+                            $password = $_POST['pass'];
+                            $hashedPassword = md5($password);
+                        
+                            // In logins.php
+                            $result = $user->checkLogon($username, $hashedPassword);
+                        
+                            if ($result !== false) {
+                                $_SESSION['roles'] = $result;
+                                $_SESSION['user'] = $username;
+                        
+                                if ($result == 1) {
+                                    header("location:\AdminLTE-3\index.php");
+                                } else if ($result == 0) {
+                                    header("location:index.php");
+                                }
+                            } else {
+                                echo "Sai tên đăng nhập hoặc mật khẩu";
+                            }
+                        }   
+                    ?>
 
-                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
-                          <a href="Register.php" class="link-danger">Register</a></p>
-                      </div>
-
-        </form>
-      
-      </div>
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn" name="login" type="submit">
+                            Login
+                        </button>
+                    </div>
+                    <div class="text-center p-t-90">
+                        <a class="txt1" href="#">
+                            Forgot Password? comingsonn
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 
-</section>
-<style>
-  .text_red {
-    color: red;
-  }
 
-</style>
-    
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="./public/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./public/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./public/vendor/bootstrap/js/popper.js"></script>
+    <script src="./public/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./public/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="./public/vendor/daterangepicker/moment.min.js"></script>
+    <script src="./public/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="./public/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="./public/js/main.js"></script>
+
 </body>
+
 </html>

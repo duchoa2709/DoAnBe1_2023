@@ -44,21 +44,29 @@ if(isset($_POST['submit'])){
 $manufactureData = $manufacture->getAllmanufacturebyid(intval($manu_id));
 ?>
 
-<div class="container cs_container ">
-  <form action="" method="post">
-   
+<div class="flex">
+    <div class="w-1/7">
+        <?php
+        include('slideBar.php');
+        ?>
+    </div>
+    <div class="w-full container ">
+    <form action="" method="post" class="m-10">
 
-    <label for="lname">nhập tên Manufacture </label>
-    <input type="text" id="lname" name="name" placeholder="Your last name.." value="<?php echo $manufactureData->manu_name ?>" >
+<!-- name -->
+<div class="mb-6">
+    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-black">Name</label>
+    <input type="text" id="name" name="name"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"
+        placeholder="Nhập tên sản phẩm" required value="<?php echo $manufactureData->manu_name ?>">
+</div>
 
-   
-    
-    
-    <br>
+<div class="flex justify-end">
+    <button name="submit" type="submit" value="Submit"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mt-2">Edit Manufacture</button>
+</div>
 
-    <input name="submit" type="submit" value="Submit">
-
-  </form>
+</form>
 </div>
 <style>
 

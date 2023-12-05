@@ -1,32 +1,29 @@
-
-
 <?php
-				require_once "config.php";
-				require_once "models/db.php";
-				require_once "models/protypes.php";
-				require_once "models/manufacture.php";
-				require_once "models/products.php";
+	require_once "config.php";
+	require_once "models/db.php";
+	require_once "models/protypes.php";
+	require_once "models/manufacture.php";
+	require_once "models/products.php";
 
-				$protypes = new Protypes;
-				$getAllprotypes = $protypes->getAllprotypes();
+	$protypes = new Protypes;
+	$getAllprotypes = $protypes->getAllprotypes();
 
-				$manufacture= new Manufacture;
-				$getAllManufacture = $manufacture->getAllManufacture();
+	$manufacture= new Manufacture;
+	$getAllManufacture = $manufacture->getAllManufacture();
 
-				$product= new Product;
-				$getAllProducts = $product->getAllProducts();
+	$product= new Product;
+	$getAllProducts = $product->getAllProducts();
 
-				$getAllProductsLimit1 = $product->getAllProductsLimit(6, 0);
-				$getAllProductsLimit2 = $product->getAllProductsLimit(6, 6);
-				$getAllProductsLimit3 = $product->getAllProductsLimit(6, 12);
-			
-
-				
+	$getAllProductsLimit1 = $product->getAllProductsLimit(6, 0);
+	$getAllProductsLimit2 = $product->getAllProductsLimit(6, 6);
+	$getAllProductsLimit3 = $product->getAllProductsLimit(6, 12);						
 ?>
 
 
- <?php include('header.php')?>
- 
+ <?php 
+	include('header.php');
+	// include('loadhomepage.php');	
+ ?>
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
@@ -116,7 +113,6 @@
 										<?php if($value['manu_id'] != 4):  ?>
 									  <li><a  href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>"><?php echo $value['manu_name']?></a></li>
 									  <?php endif; endforeach ?>
-
 								</ul>
 							</div>
 						</div>

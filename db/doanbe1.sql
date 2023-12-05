@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Máy chủ: localhost
--- Thời gian đã tạo: Th12 04, 2023 lúc 10:10 AM
--- Phiên bản máy phục vụ: 8.0.24
--- Phiên bản PHP: 7.4.33
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 05, 2023 lúc 02:44 PM
+-- Phiên bản máy phục vụ: 10.4.27-MariaDB
+-- Phiên bản PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `sql_webservice_m`
+-- Cơ sở dữ liệu: `doanbe1`
 --
 
 -- --------------------------------------------------------
@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `detail_product` (
-  `id_detail` int NOT NULL,
+  `id_detail` int(11) NOT NULL,
   `name_product` varchar(259) NOT NULL,
-  `qty_product` int NOT NULL,
-  `price_product` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `qty_product` int(11) NOT NULL,
+  `price_product` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `detail_product`
@@ -51,9 +51,9 @@ INSERT INTO `detail_product` (`id_detail`, `name_product`, `qty_product`, `price
 --
 
 CREATE TABLE `manufactures` (
-  `manu_id` int NOT NULL,
-  `manu_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+  `manu_id` int(11) NOT NULL,
+  `manu_name` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `manufactures`
@@ -72,10 +72,10 @@ INSERT INTO `manufactures` (`manu_id`, `manu_name`) VALUES
 --
 
 CREATE TABLE `order` (
-  `id` mediumint NOT NULL,
-  `user_id` mediumint NOT NULL,
-  `created_at` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `id` mediumint(9) NOT NULL,
+  `user_id` mediumint(9) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -84,11 +84,11 @@ CREATE TABLE `order` (
 --
 
 CREATE TABLE `order_detail` (
-  `product_id` int NOT NULL,
-  `order_id` mediumint NOT NULL,
-  `quantity` int NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `order_id` mediumint(9) NOT NULL,
+  `quantity` int(11) NOT NULL,
   `price` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -97,12 +97,12 @@ CREATE TABLE `order_detail` (
 --
 
 CREATE TABLE `order_product` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name_user` varchar(250) NOT NULL,
   `tel_user` varchar(250) NOT NULL,
   `email_user` varchar(250) NOT NULL,
   `address_user` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `order_product`
@@ -124,38 +124,37 @@ INSERT INTO `order_product` (`id`, `name_user`, `tel_user`, `email_user`, `addre
 --
 
 CREATE TABLE `products` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `manu_id` int NOT NULL,
-  `type_id` int NOT NULL,
-  `price` int NOT NULL,
+  `manu_id` int(11) NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
   `image` varchar(150) NOT NULL,
   `description` text NOT NULL,
-  `feature` tinytext NOT NULL,
-  `created_at` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `feature` tinyint(1) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `manu_id`, `type_id`, `price`, `image`, `description`, `feature`, `created_at`) VALUES
-(6, 'Dien thoại', 1, 2, 5000000, 'garan.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-10-25 23:29:48'),
-(7, 'Bánh mì', 1, 2, 30000, 'banhmi.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-10-25 23:30:18'),
-(8, 'Trà đào', 2, 2, 30000000, 'tradao.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-10-25 23:31:41'),
-(9, 'Trà chanh', 2, 3, 7000000, 'trachanh.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-10-25 23:32:52'),
-(10, 'Cà phê', 2, 3, 600000, 'caphe.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-10-25 23:33:48'),
-(11, 'Trà sữa', 2, 3, 1000000, 'trasua.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-11-10 16:59:38'),
-(12, 'Trái cây tô', 3, 3, 2000000, 'traicay.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-11-10 17:00:24'),
-(13, 'Kem matcha', 3, 4, 100000, 'kem.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-11-10 16:58:35'),
-(43, 'Bánh Tráng', 3, 1, 290000, 'banhtrang.png', 'Đồ Ăn Nhanh Tiện Lợi', '0', '2023-05-02 04:21:46'),
-(44, 'Cá Viên', 3, 1, 234234, 'cavien.png', 'Đồ Ăn Nhanh Tiện Lợi', '0', '2023-05-02 04:22:51'),
-(46, 'Pizza', 1, 1, 234234, 'pizza.png', 'Đồ Ăn Nhanh Tiện Lợi', '0', '2023-05-30 09:44:27'),
-(47, 'Gà rán', 4, 2, 5000000, 'garan.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-10-25 23:29:48'),
-(48, 'Trà chanh', 4, 3, 7000000, 'trachanh.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-10-25 23:32:52'),
-(49, 'Kem matcha', 4, 4, 100000, 'kem.png', 'Đồ Ăn Nhanh Tiện Lợi', '1', '2022-11-10 16:58:35'),
-(50, 'Cá Viên', 4, 1, 1222222, 'cavien.png', 'Đồ Ăn Nhanh Tiện Lợi', '0', '2023-05-02 04:22:51'),
-(51, 'sdfsdf', 2, 2, 1, 'maytinh1.jpg', 'Giúp Bạn Làm Công Việc Nhanh Chóng Và Truy Cập WebSite Nhanh Hơn binh thuong', '0', '2023-12-02 02:35:37');
+(6, 'Dien thoại', 1, 2, 5000000, '', 'Đồ Ăn Nhanh Tiện Lợib', 0, '2023-12-05 09:22:47'),
+(7, 'Bánh mì', 1, 2, 30000, 'banhmi.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-10-25 23:30:18'),
+(8, 'Trà đào', 2, 2, 30000000, 'tradao.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-10-25 23:31:41'),
+(9, 'Trà chanh', 2, 3, 7000000, 'trachanh.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-10-25 23:32:52'),
+(10, 'Cà phê', 2, 3, 600000, 'caphe.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2023-12-05 08:40:00'),
+(11, 'Trà sữa', 2, 3, 1000000, 'trasua.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-11-10 16:59:38'),
+(12, 'Trái cây tô', 3, 3, 2000000, 'traicay.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-11-10 17:00:24'),
+(13, 'Kem matcha', 3, 4, 100000, 'kem.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-11-10 16:58:35'),
+(43, 'Bánh Tráng', 3, 1, 290000, 'banhtrang.png', 'Đồ Ăn Nhanh Tiện Lợi', 0, '2023-05-02 04:21:46'),
+(44, 'Cá Viên', 3, 1, 234234, 'cavien.png', 'Đồ Ăn Nhanh Tiện Lợi', 0, '2023-05-02 04:22:51'),
+(46, 'Pizza', 1, 1, 234234, 'pizza.png', 'Đồ Ăn Nhanh Tiện Lợi', 0, '2023-05-30 09:44:27'),
+(47, 'Gà rán', 4, 2, 5000000, 'garan.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-10-25 23:29:48'),
+(48, 'Trà chanh', 4, 3, 7000000, 'trachanh.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-10-25 23:32:52'),
+(49, 'Kem matcha', 4, 4, 100000, 'kem.png', 'Đồ Ăn Nhanh Tiện Lợi', 1, '2022-11-10 16:58:35'),
+(50, 'Cá Viên', 4, 1, 1222222, 'cavien.png', 'Đồ Ăn Nhanh Tiện Lợi', 0, '2023-05-02 04:22:51');
 
 -- --------------------------------------------------------
 
@@ -164,9 +163,9 @@ INSERT INTO `products` (`id`, `name`, `manu_id`, `type_id`, `price`, `image`, `d
 --
 
 CREATE TABLE `protypes` (
-  `type_id` int NOT NULL,
-  `type_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
+  `type_id` int(11) NOT NULL,
+  `type_name` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `protypes`
@@ -186,26 +185,25 @@ INSERT INTO `protypes` (`type_id`, `type_name`) VALUES
 --
 
 CREATE TABLE `user` (
-  `id` mediumint NOT NULL,
-  `user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `password` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  `id` mediumint(9) NOT NULL,
+  `user` varchar(50) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `role` varchar(12) NOT NULL DEFAULT 'user'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`id`, `user`, `password`) VALUES
-(1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b'),
-(3, 'toan', '202cb962ac59075b964b07152d234b70'),
-(20, 'Admin1', '202cb962ac59075b964b07152d234b70'),
-(32, 'toanase', '123'),
-(33, '', ''),
-(34, '', ''),
-(35, '', ''),
-(36, 'Admin', '0192023a7bbd73250516f069df18b500'),
-(37, 'Duchoa', '823f4cfe556f95863e2df595c02b432f'),
-(38, 'Adminn11', '202cb962ac59075b964b07152d234b70');
+INSERT INTO `user` (`id`, `user`, `password`, `role`) VALUES
+(1, 'admin', '827ccb0eea8a706c4c34a16891f84e7b', 'admin'),
+(3, 'toan', '202cb962ac59075b964b07152d234b70', 'user'),
+(20, 'Admin1', '202cb962ac59075b964b07152d234b70', 'user'),
+(36, 'Admin', '0192023a7bbd73250516f069df18b500', 'user'),
+(37, 'Duchoa', '823f4cfe556f95863e2df595c02b432f', 'user'),
+(38, 'Adminn11', '202cb962ac59075b964b07152d234b70', 'user'),
+(39, 'hoaphd27.df@gmail.com', '9e688cd052098bf14734e7dcc057faa3', 'user'),
+(40, 'hoaphd27.df@gmail.com', '9e688cd052098bf14734e7dcc057faa3', 'user');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -269,37 +267,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `manufactures`
 --
 ALTER TABLE `manufactures`
-  MODIFY `manu_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `manu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT cho bảng `order`
 --
 ALTER TABLE `order`
-  MODIFY `id` mediumint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT cho bảng `order_product`
 --
 ALTER TABLE `order_product`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT cho bảng `protypes`
 --
 ALTER TABLE `protypes`
-  MODIFY `type_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` mediumint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` mediumint(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

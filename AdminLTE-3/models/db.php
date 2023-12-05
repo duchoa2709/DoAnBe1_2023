@@ -12,4 +12,5 @@ return self::$connection;
 }
 }
     }
+    session_start();
 ?>

@@ -9,7 +9,7 @@
 // tra ve trang dashboard
 ?>
 <?php
-require "config.php";
+require "models/config.php";
 require "models/db.php";
 require "models/protypes.php";
 require "models/manufacture.php";
@@ -48,14 +48,12 @@ if(isset($_POST['submit'])){
     header('location:Products.php');
 
 }
-
-
 ?>
 
 <div class="flex">
     <div class="w-1/7">
         <?php
-        include('slideBar.php');
+        include('component/slideBar.php');
         ?>
     </div>
     <div class="w-full container ">
@@ -149,6 +147,8 @@ if(isset($_POST['submit'])){
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                     <?php echo ($productData->feature == 1) ? 'checked' : ''; ?>>
             </div>
+
+            
 
             <div class="flex justify-end">
                 <button name="submit" type="submit" value="Submit"

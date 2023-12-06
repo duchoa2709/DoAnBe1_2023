@@ -19,7 +19,7 @@
 </head>
 
 <?php
-    require "./config.php";
+    require "./models/config.php";
     require "./models/db.php";
     require "./models/protypes.php";
     require "./models/manufacture.php";
@@ -43,15 +43,13 @@
     <div class="div flex">
         <div class="w-1/7">
             <?php
-            include('component/slideBar.php');
+            include('./component/slideBar.php');
             ?>
         </div>
         <div class="w-full overflow-hidden rounded-lg shadow-xs flex">
-
-
             <div class="w-full overflow-x-auto">
                 <?php
-                include('component/navbarDoashBoard.php');
+                include('./component/navbarDoashBoard.php');
                 
                 // if (session('success')){
                 ?>
@@ -73,7 +71,7 @@
                 <?php
                 // }
                 ?>
-                <div class="button_add flex justify-between items-center mr-3">
+                <div class="button_add flex justify-between items-center mx-5">
                     <form action="/searchProductDashboard" method="get">
                         <div class="flex justify-center items-center md:w-[400px] w-[90%]  md:pl-8">
                             <div class="space-y-10  ">
@@ -97,7 +95,8 @@
                             </div>
                         </div>
                     </form>
-                    <a href="/AddProduct"><button
+                    <a href="add_product.php" class="flex justify-center items-center">
+                        <button
                             class="flex  mx-auto  text-white bg-gradient-to-r from-cyan-500 to-blue-500 border-0 py-2 px-9 m-5  rounded text-xs">Add
                             Product</button>
                     </a>
@@ -109,8 +108,8 @@
                             <th class="px-4 py-3">Name</th>
                             <th class="px-4 py-3">Description</th>
                             <th class="px-4 py-3">Price</th>
-                            <th class="px-4 py-3">Like</th>
-                            <th class="px-4 py-3">Categories</th>
+                            <th class="px-4 py-3">Feature</th>
+                            <th class="px-4 py-3">Protypes</th>
                             <th class="px-4 py-3">Manufactures</th>
                             <th class="px-4 py-3">Last Update</th>
                             <th class="px-4 py-3">Actions</th>
@@ -139,59 +138,58 @@
                             </td>
                             <!-- description -->
                             <td class="px-4 py-3 text-sm w-4/12">
-                                {{ Str::limit($product->description, 1000) }}
+                                <p class="text-xs text-gray-600 dark:text-gray-400">
+                                    <?php echo $product['description'] ?>
+                                </p>
                             </td>
-
 
                             <!-- price -->
                             <td class="px-4 py-3 text-xs w-1/12">
                                 <span
                                     class="px-3 py-2 font-semibold leading-tight text-green-700 bg-green-100 rounded-md dark:bg-green-700 dark:text-green-100">
-                                    {{ number_format($product->price, 0, ',', ',') }}đ
+                                    <?php echo $product['price'] ?>đ
                                 </span>
                             </td>
 
-                            <!-- Like -->
+                            <!-- Feature -->
                             <td class="px-4 py-3 text-sm w-1/12">
                                 <span class="px-3 py-2 font-semibold leading-tight text-white bg-[#0dafd9] rounded-md">
-                                    @if ($product->like_count == null)
-                                    0
-                                    @else
-                                    {{$product->like_count}}
-                                    @endif
+                                    <?php if ($product['feature'] == 1) {
+                                        echo "Yes";
+                                    } else {
+                                        echo "No";
+                                    } ?>
                                 </span>
                             </td>
 
-
-                            <!-- Categories  -->
+                            <!-- type id -->
                             <td class="px-4 py-3 text-sm w-1/12">
-                                @foreach($categories as $item)
-                                @if($item->id == $product->categories_id )
-                                <p class="text-xs text-gray-600 dark:text-gray-400">
-                                    {{$item->name}}
-                                </p>
-                                @endif
-                                @endforeach
+                                <?php
+                                foreach ($getAllprotypes as $items) :
+                                    if ($items['type_id'] == $product['type_id']) {
+                                        echo $items['type_name'];
+                                    }
+                                endforeach;
+                                ?>
                             </td>
-
-
-
 
                             <!-- Manufactures -->
                             <td class="px-4 py-3 text-sm w-1/12">
-                                @foreach($manufacture as $items)
-                                @if($items->id == $product->manufacture_id )
-                                <p class="text-xs text-gray-600 dark:text-gray-400">
-                                    {{$items->name}}
-                                </p>
-                                @endif
-                                @endforeach
+                                <?php
+                                foreach ($getAllManufacture as $items) :
+                                    if ($items['manu_id'] == $product['manu_id']) {
+                                        echo $items['manu_name'];
+                                    }
+                                endforeach;
+                                ?>
                             </td>
 
 
                             <!-- Lần update cuối cùng -->
                             <td class="px-4 py-3 text-sm w-1/12">
-                                {{$product->updated_at}}
+                                <p class="text-xs text-gray-600 dark:text-gray-400">
+                                    <?php echo $product['created_at'] ?>
+                                </p>
                             </td>
 
 
@@ -204,7 +202,7 @@
 
 
 
-                                    <a href="/EditProduct/{{$product->id}}">
+                                    <a href="update_product.php?id=<?php echo $product['id'] ?>">
                                         <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit">
@@ -216,10 +214,10 @@
                                         </button>
                                     </a>
 
+                                    <form action="del_product.php" method="post">
+                                        <!-- Add a hidden input field to store the product ID -->
+                                        <input type="hidden" name="id" value="<?php echo $product['id'] ?>" />
 
-                                    <form action="/deleteProduct/{{$product->id}}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
                                         <button type="submit"
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Delete">

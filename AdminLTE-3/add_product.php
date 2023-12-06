@@ -18,7 +18,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <?php
-require "config.php";
+require "models/config.php";
 require "models/db.php";
 require "models/protypes.php";
 require "models/manufacture.php";
@@ -39,7 +39,7 @@ if(isset($_POST['submit'])){
     $img = $_POST['image'];
     $description = $_POST['description'];
     // $feature = $_POST['feature'];
-    $feature = $_POST['feature'];
+    $feature = isset($_POST['feature']) ? 1 : 0;
 
     $created_at = date('Y-m-d h:i:s', time());
 
@@ -54,7 +54,7 @@ if(isset($_POST['submit'])){
 <div class="flex">
     <div class="w-1/7">
         <?php
-        include('slideBar.php');
+        include('component/slideBar.php');
         ?>
     </div>
     <div class="w-full container cs_container ">

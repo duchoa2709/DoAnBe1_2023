@@ -1,5 +1,5 @@
 <?php
-				require "config.php";
+				require "models/config.php";
 				require "models/db.php";
 				require "models/protypes.php";
 				require "models/manufacture.php";

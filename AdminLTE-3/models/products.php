@@ -66,26 +66,53 @@ public function paginationProducts($x ,$y )
 }
 public function deleteProducts($x)
 {
-    $sql = self::$connection->prepare("delete  FROM products  where  id = ? ");
-    $sql->bind_param("i", $x );
-    $sql->execute(); //return an object
-
+    $sql = self::$connection->prepare("DELETE FROM products WHERE id = ?");
+    $sql->bind_param("i", $x);
+    
+    // Execute the statement
+    if ($sql->execute()) {
+        // Successful deletion
+        $sql->close();  // Close the statement
+        return true;
+    } else {
+        // Error occurred
+        error_log("Error deleting product: " . $sql->error);
+        $sql->close();  // Close the statement
+        return false;
+    }
 }
 
-public function insertProducts ($name , $manu_id , $type_id , $price , $image , $description , $feature , $created_at )
+
+public function insertProducts($name, $manu_id, $type_id, $price, $image, $description, $feature, $created_at)
 {
-    $sql = self::$connection->prepare("insert into products (name , manu_id ,type_id , price , image ,description ,feature,created_at  ) values(? , ? , ?, ? , ?,? , ? , ?)");
-    $sql->bind_param("siiissis" , $name , $manu_id , $type_id , $price , $image , $description , $feature , $created_at );
-    $sql->execute(); //return an object
-  
-   
+    $sql = self::$connection->prepare("INSERT INTO products (name, manu_id, type_id, price, image, description, feature, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $sql->bind_param("siiissss", $name, $manu_id, $type_id, $price, $image, $description, $feature, $created_at);
+
+    // Thực hiện câu lệnh và kiểm tra kết quả
+    if ($sql->execute()) {
+        // Thành công
+        return true;
+    } else {
+        // Xử lý lỗi
+        error_log("Error inserting product: " . $sql->error);
+        return false;
+    }
 }
 
-public function updateProducts ($id , $name , $manu_id , $type_id , $price , $image , $description , $feature , $created_at )
+
+public function updateProducts($id , $name , $manu_id , $type_id , $price , $image , $description , $feature , $created_at )
 {  
     $sql = self::$connection->prepare("update products  set name = ? ,  manu_id = ? , type_id = ? , price = ? , image = ? , description = ? , feature = ? , created_at = ?  where id = ? ");
     $sql->bind_param("siiissisi" , $name , $manu_id , $type_id, $price , $image, $description , $feature, $created_at ,  $id );
-    $sql->execute(); 
+    // Thực hiện câu lệnh và kiểm tra kết quả
+    if ($sql->execute()) {
+        // Thành công
+        return true;
+    } else {
+        // Xử lý lỗi
+        error_log("Error inserting product: " . $sql->error);
+        return false;
+    }
 }
 
 public function insertUsersOrder ($name_user , $tel_user , $email_user , $address_user )

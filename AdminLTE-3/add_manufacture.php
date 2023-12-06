@@ -10,7 +10,7 @@
 
 ?>
 <?php
-require "config.php";
+require "models/config.php";
 require "models/db.php";
 require "models/protypes.php";
 require "models/manufacture.php";
@@ -36,7 +36,7 @@ if(isset($_POST['submit'])){
 <div class="flex">
     <div class="w-1/7">
         <?php
-        include('slideBar.php');
+        include('component/slideBar.php');
         ?>
     </div>
     <div class="w-full container ">

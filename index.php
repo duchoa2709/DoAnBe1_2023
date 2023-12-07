@@ -22,7 +22,7 @@
 
  <?php 
 	include('header.php');
-	// include('loadhomepage.php');	
+	include('component/loadhomepage.php');	
  ?>
 		<!-- SECTION -->
 		<div class="section">

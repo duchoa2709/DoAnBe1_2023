@@ -25,7 +25,6 @@
     require "./models/manufacture.php";
     require "./models/products.php";
 
-
     $protypes = new Protypes;
     $getAllprotypes = $protypes->getAllprotypes();
 
@@ -34,9 +33,6 @@
 
     $product= new Product;
     $getAllProducts = $product->getAllProducts();
-
- 
-  
 ?>
 
 <body>
@@ -119,7 +115,7 @@
                         <?php
                         foreach ($getAllProducts as $product) :
                         ?>
-                        <tr class="text-gray-700 dark:text-gray-400 items-center">
+                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800 text-center">
                             <!-- sản phẩm -->
                             <td class="px-3 py-3 w-3/12">
                                 <div class="flex items-center text-sm">
@@ -147,7 +143,7 @@
                             <td class="px-4 py-3 text-xs w-1/12">
                                 <span
                                     class="px-3 py-2 font-semibold leading-tight text-green-700 bg-green-100 rounded-md dark:bg-green-700 dark:text-green-100">
-                                    <?php echo $product['price'] ?>đ
+                                    <?php echo number_format($product['price'], 0, ',', '.') . 'đ'; ?>
                                 </span>
                             </td>
 

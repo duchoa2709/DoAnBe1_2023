@@ -9,7 +9,7 @@ $items = array();
 $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
 return $items; //return an array
 }
-public function getAllmanufacturebyid ($manu_id)
+public function getAllmanufacturebyid($manu_id)
 {
 $sql = self::$connection->prepare("SELECT * FROM manufactures WHERE manu_id = ?");
 $sql->bind_param("i", $manu_id);

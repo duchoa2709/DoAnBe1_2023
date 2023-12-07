@@ -18,7 +18,7 @@ public function getAllProductsLimit($x , $y)
     $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
     return $items; //return an array
 }
-public function getAllProductsById ($id)
+public function getAllProductsById($id)
 {
     $sql = self::$connection->prepare("SELECT * FROM products WHERE id = ?");
     $sql->bind_param("i", $id);
@@ -27,7 +27,7 @@ public function getAllProductsById ($id)
     return $items;
 }
 
-public function getAllProductslimit4 ()
+public function getAllProductslimit4()
 {
     $sql = self::$connection->prepare("SELECT * FROM products ORDER BY 'id' DESC limit 4");
     $sql->execute(); //return an object
@@ -117,14 +117,11 @@ public function updateProducts($id , $name , $manu_id , $type_id , $price , $ima
 
 public function insertUsersOrder ($name_user , $tel_user , $email_user , $address_user )
 {
-    
     //insert into products values("toan" , 1 , 1, 34324 , "But.jpg","dsfsdf" , 1 , "2022-10-26 05:50:59");
     $sql = self::$connection->prepare(" insert into order_product (name_user , tel_user , email_user , address_user)
     values( ? , ? , ? , ?);");
     $sql->bind_param("ssss" , $name_user , $tel_user , $email_user , $address_user  );
     $sql->execute(); //return an object
-  
-   
 }
 
 public function insertProductOrder ($id_detail ,$name , $price , $qty )
@@ -133,8 +130,6 @@ public function insertProductOrder ($id_detail ,$name , $price , $qty )
     values(?, ? , ? , ? );");
     $sql->bind_param("isii" , $id_detail ,  $name , $price , $qty  );
     $sql->execute(); //return an object
-  
-   
 }
 
 }

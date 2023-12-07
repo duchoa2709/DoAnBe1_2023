@@ -64,12 +64,6 @@ div.load_home_page .mask {
 }
 
 
-.load_home_page svg path.str1 {
-    animation-name: Signature;
-    animation-duration: 22s;
-    animation-fill-mode: forwards;
-    animation-timing-function: cubic-bezier(2, .25, .43, .96);
-}
 
 .load_home_page.hidden svg {
     transition-delay: 0.5s;
@@ -98,11 +92,32 @@ div.load_home_page .mask {
 
 }
 
+.load_home_page svg path.str1 {
+    animation-name: identifier;
+    animation-duration: 15s;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(2, .25, .43, .96);
+}
+
 @keyframes Signature {
     to {
         stroke: #FFF;
         stroke-dashoffset: 0;
+        fill: #FFF;
     }
+}
+
+@keyframes identifier {
+    0% {
+        stroke-dashoffset: 9999;
+        fill: transparent;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
+        fill: #FFF;
+    }
+
 }
 
 .load_home_page img {
@@ -116,7 +131,7 @@ div.load_home_page .mask {
     <!-- <img src="./public/images/LogoBe1.jpg" alt=""> -->
     <svg width="605.608" height="136.136" viewBox="0 0 605.608 136.136" xmlns="http://www.w3.org/2000/svg">
         <g id="svgGroup" stroke-linecap="round" fill-rule="evenodd" font-size="9pt" stroke="#000000"
-            stroke-width="0.5mm" fill="#ffffff" style="stroke:#000000;stroke-width:0.5mm;fill:#ffffff">
+            stroke-width="0.5mm" fill="none" style="stroke:#000000;stroke-width:0.5mm;fill:none">
             <path class="str1"
                 d="M 21.352 109.888 Q 13.872 109.888 11.016 106.964 A 10.37 10.37 0 0 1 8.176 101.124 A 14.039 14.039 0 0 1 8.024 99.416 A 25.065 25.065 0 0 1 8.263 96.096 Q 8.49 94.405 8.932 92.498 A 53.851 53.851 0 0 1 9.588 89.964 A 307.394 307.394 0 0 1 11.972 81.97 A 272.778 272.778 0 0 1 12.784 79.424 Q 16.048 69.768 19.584 60.384 A 611.256 611.256 0 0 1 25.824 44.483 A 556.193 556.193 0 0 1 26.724 42.296 Q 30.328 33.592 33.66 25.704 Q 36.992 17.816 39.848 11.152 A 473.085 473.085 0 0 0 33.266 11.293 Q 30.671 11.367 28.321 11.468 A 253.979 253.979 0 0 0 23.868 11.696 Q 17.136 12.104 11.56 12.716 A 160.883 160.883 0 0 0 2.966 13.902 A 181.6 181.6 0 0 0 0 14.416 A 12.483 12.483 0 0 1 1.479 9.714 A 11.698 11.698 0 0 1 5.372 5.644 A 23.276 23.276 0 0 1 9.712 3.461 Q 11.935 2.602 14.598 1.996 A 48.987 48.987 0 0 1 17.952 1.36 A 97.702 97.702 0 0 1 25.855 0.482 Q 29.43 0.223 33.371 0.158 A 162.447 162.447 0 0 1 36.04 0.136 A 247.018 247.018 0 0 1 42.431 0.216 A 205.623 205.623 0 0 1 46.036 0.34 Q 50.728 0.544 55.012 0.952 Q 59.296 1.36 63.376 1.768 Q 69.936 2.393 74.463 2.699 A 183.124 183.124 0 0 0 77.044 2.856 Q 81.741 3.107 83.957 3.127 A 40.641 40.641 0 0 0 84.32 3.128 A 22.544 22.544 0 0 1 77.714 7.368 A 28.693 28.693 0 0 1 74.052 8.636 A 62.819 62.819 0 0 1 61.912 10.688 A 69.47 69.47 0 0 1 61.064 10.744 A 227.275 227.275 0 0 1 52.035 11.112 A 193.351 193.351 0 0 1 48.144 11.152 Q 41.616 27.2 36.176 44.472 Q 30.736 61.744 26.112 78.608 A 1018.429 1018.429 0 0 0 24.872 83.227 Q 23.91 86.845 23.188 89.692 A 96.989 96.989 0 0 0 22.212 93.914 Q 21.796 95.926 21.524 97.746 A 59.193 59.193 0 0 0 21.488 97.988 A 52.541 52.541 0 0 0 20.997 103.356 A 61.991 61.991 0 0 0 20.944 105.944 A 16.453 16.453 0 0 0 20.957 106.578 Q 20.97 106.903 20.994 107.264 A 28.671 28.671 0 0 0 21.012 107.508 A 13.733 13.733 0 0 0 21.074 108.121 Q 21.165 108.86 21.352 109.888 Z"
                 id="0" vector-effect="non-scaling-stroke" />
@@ -157,6 +172,6 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         load_home_page.style.top = '-100vh';
         body.style.overflow = 'auto';
-    }, 1800)
+    }, 2000)
 })
 </script>

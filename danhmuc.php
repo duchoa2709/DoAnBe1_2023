@@ -83,7 +83,7 @@
 										?>
 										<div class="product">
 											<div class="product-img">
-												<img src="./img/<?php echo $value['image'] ?>" alt="">
+												<img src="./img/<?php echo $value['image'] ?>" alt="" width="263px" height="220px">
 												<div class="product-label">
 													<span class="sale">-30%</span>
 													<span class="new">NEW</span>

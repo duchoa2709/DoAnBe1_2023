@@ -16,19 +16,19 @@
 
     // pagination
     // lấy giá trị limit từ cookies
-    if (isset($_COOKIE['limit'])) {
-        $_SESSION['limit'] = $_COOKIE['limit'];
+    if (isset($_COOKIE['limitProduct'])) {
+        $_SESSION['limitProduct'] = $_COOKIE['limitProduct'];
     } else {
-        $_SESSION['limit'] = 2;
+        $_SESSION['limitProduct'] = 2;
     }
     // lấy giá trị limit từ form
-    if (isset($_GET['limit'])) {
-        $_SESSION['limit'] = $_GET['limit'];
+    if (isset($_GET['limitProduct'])) {
+        $_SESSION['limitProduct'] = $_GET['limitProduct'];
     }
     // lưu giá trị limit vào cookies
-    setcookie('limit', $_SESSION['limit'], time() + 3600);
+    setcookie('limitProduct', $_SESSION['limitProduct'], time() + 3600);
 
-    $limit = $_SESSION['limit'];
+    $limit = $_SESSION['limitProduct'];
 
     $per_page = 1;
     $getProductsList = $product->getAllProductsLimit($limit, $per_page);
@@ -41,9 +41,25 @@
     }
     $getProductsList = $product->getAllProductsLimit($limit, $start);
 
+    $countProducts = $product->countProducts();
     // end pagination
 
-    $countProducts = $product->countProducts();
+    //String cut
+    function stringCut($text, $limit) {
+        if (mb_strlen($text) <= $limit) {
+            return $text;
+        }
+        
+        $stringCut = mb_substr($text, 0, $limit);
+        $lastSpacePos = mb_strrpos($stringCut, " "); // Tìm vị trí khoảng trắng gần nhất
+        
+        if ($lastSpacePos === false) {
+            return $stringCut . "...";
+        }
+        
+        return mb_substr($stringCut, 0, $lastSpacePos) . "...";
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -135,14 +151,14 @@
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
-                            <th class="px-4 py-3">Name</th>
-                            <th class="px-4 py-3">Description</th>
-                            <th class="px-4 py-3">Price</th>
-                            <th class="px-4 py-3">Feature</th>
-                            <th class="px-4 py-3">Protypes</th>
-                            <th class="px-4 py-3">Manufactures</th>
-                            <th class="px-4 py-3">Last Update</th>
-                            <th class="px-4 py-3">Actions</th>
+                            <th class="px-4 py-3 text-center">Name</th>
+                            <th class="px-4 py-3 text-center">Description</th>
+                            <th class="px-4 py-3 text-center">Price</th>
+                            <th class="px-4 py-3 text-center">Feature</th>
+                            <th class="px-4 py-3 text-center">Protypes</th>
+                            <th class="px-4 py-3 text-center">Manufactures</th>
+                            <th class="px-4 py-3 text-center">Last Update</th>
+                            <th class="px-4 py-3 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -170,7 +186,11 @@
                             <!-- description -->
                             <td class="px-4 py-3 text-sm w-4/12">
                                 <p class="text-xs text-gray-600 dark:text-gray-400">
-                                    <?php echo $product['description'] ?>
+                                    <?php 
+                                    $text = $product['description'];
+                                    $stringCut = stringCut($text, 300);
+                                    echo $stringCut;
+                                    ?>
                                 </p>
                             </td>
 
@@ -263,6 +283,7 @@
                         ?>
                     </tbody>
                 </table>
+                
                 <!-- pagination product -->
                 <div class="flex justify-between items-center my-3 mr-3 ">
                     <!-- hiển thị số sản phẩm trên 1 trang -->
@@ -278,8 +299,8 @@
                                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                         </svg>
                                         <input class="bg-gray-100 outline-none placeholder:text-sm text-center"
-                                            type="number" name="limit" placeholder="Nhập số hiển thị trên 1 trang"
-                                            value="<?php echo $limit ?>" />
+                                            type="number" name="limitProduct"
+                                            placeholder="Nhập số hiển thị trên 1 trang" value="<?php echo $limit ?>" />
                                     </div>
                                     <div
                                         class="bg-[#0cb0d8] py-1.5 px-5 text-white font-semibold rounded-lg  transition duration-3000 ">
@@ -295,7 +316,8 @@
                         <span class="text-sm text-gray-700 dark:text-gray-400 mr-5">
                             Hiển thị trang<span class="font-semibold text-gray-900 "> <?php echo $page ?>
                             </span> có <span class="font-semibold text-gray-900 "><?php echo count($getProductsList) ?>
-                            </span> trên <span class="font-semibold text-gray-900 "><?php echo $countProducts[0]['number']; ?>
+                            </span> trên <span
+                                class="font-semibold text-gray-900 "><?php echo $countProducts[0]['number']; ?>
                             </span> sản phẩm
                         </span>
 

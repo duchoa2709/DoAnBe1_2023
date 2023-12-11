@@ -1,3 +1,66 @@
+<?php
+    require "./models/config.php";
+    require "./models/db.php";
+    require "./models/protypes.php";
+    require "./models/manufacture.php";
+    require "./models/products.php";
+
+    $protypes = new Protypes;
+    // $getAllprotypes = $protypes->getAllprotypes();
+
+    $manufacture= new Manufacture;
+    $getAllManufacture = $manufacture->getAllManufacture();
+
+    $product= new Product;
+
+    // pagination
+    // lấy giá trị limit từ cookies
+    if (isset($_COOKIE['limitProtypes'])) {
+        $_SESSION['limitProtypes'] = $_COOKIE['limitProtypes'];
+    } else {
+        $_SESSION['limitProtypes'] = 2;
+    }
+    // lấy giá trị limit từ form
+    if (isset($_GET['limitProtypes'])) {
+        $_SESSION['limitProtypes'] = $_GET['limitProtypes'];
+    }
+    // lưu giá trị limit vào cookies
+    setcookie('limitProtypes', $_SESSION['limitProtypes'], time() + 3600);
+
+    $limit = $_SESSION['limitProtypes'];
+
+    $per_page = 1;
+    $getProtypes = $protypes->getAllProtypesLimit($limit, $per_page);
+    $total_page = ceil(count($protypes->getAllprotypes()) / $limit);
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    if ($page > 1) {
+        $start = ($page * $limit) - $limit;
+    } else {
+        $start = 0;
+    }
+    $getProtypes = $protypes->getAllProtypesLimit($limit, $start);
+
+    $countProtypes = $protypes->countProtypes();
+    // end pagination
+
+    //String cut
+    function stringCut($text, $limit) {
+        if (mb_strlen($text) <= $limit) {
+            return $text;
+        }
+        
+        $stringCut = mb_substr($text, 0, $limit);
+        $lastSpacePos = mb_strrpos($stringCut, " "); // Tìm vị trí khoảng trắng gần nhất
+        
+        if ($lastSpacePos === false) {
+            return $stringCut . "...";
+        }
+        
+        return mb_substr($stringCut, 0, $lastSpacePos) . "...";
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,30 +79,6 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
 
 </head>
-
-
-
-<?php
-    require "./models/config.php";
-    require "./models/db.php";
-    require "./models/protypes.php";
-    require "./models/manufacture.php";
-    require "./models/products.php";
-
-    $protypes = new Protypes;
-    $getAllprotypes = $protypes->getAllprotypes();
-
-    $manufacture= new Manufacture;
-    $getAllManufacture = $manufacture->getAllManufacture();
-
-    $product= new Product;
-    $getAllProducts = $product->getAllProducts();
-
- 
-  
-?>
-
-
 
 <body>
     <div class="div flex">
@@ -113,11 +152,11 @@
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                         <?php
-                        foreach ($getAllprotypes as $protypes) :
+                        foreach ($getProtypes as $protypes) :
                         ?>
                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800 text-center">
                             <!-- sản phẩm -->
-                            <td class="px-3 py-3 w-3/12">
+                            <td class="px-3 py-3 w-6/12">
                                 <div class="flex items-center text-sm justify-center">
                                     <!-- Name -->
                                     <div>
@@ -127,7 +166,7 @@
                             </td>
 
                             <!-- button xóa sửa -->
-                            <td class="px-4 py-3 1/12">
+                            <td class="px-4 py-3 6/12">
                                 <div class="flex items-center space-x-4 text-sm justify-center">
                                     <a href="update_protype.php?id=<?php echo $protypes['type_id'] ?>">
                                         <button
@@ -163,9 +202,80 @@
                         ?>
                     </tbody>
                 </table>
-                <div class="panigation p-8 ">
-                    {{ $products->links() }}
+                <!-- pagination product -->
+                <div class="flex justify-between items-center my-3 mr-3 ">
+                    <!-- hiển thị số sản phẩm trên 1 trang -->
+                    <form action="" method="get">
+                        <div class="flex justify-start items-center md:w-[400px] w-[90%]  md:pl-8">
+                            <div class="space-y-10  ">
+                                <div class="flex items-center p-1 space-x-6 h-[40px] bg-white rounded-xl  ">
+                                    <div
+                                        class="flex bg-gray-100 flex items-center px-2 h-[35px] md:w-22 w-52 space-x-4 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-30" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                        <input class="bg-gray-100 outline-none placeholder:text-sm text-center"
+                                            type="number" name="limitProtypes"
+                                            placeholder="Nhập số hiển thị trên 1 trang" value="<?php echo $limit ?>" />
+                                    </div>
+                                    <div
+                                        class="bg-[#0cb0d8] py-1.5 px-5 text-white font-semibold rounded-lg  transition duration-3000 ">
+                                        <input class="text-sm" type="submit" value="Hiển thị">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="flex items-center">
+                        <!-- text -->
+                        <span class="text-sm text-gray-700 dark:text-gray-400 mr-5">
+                            Hiển thị trang<span class="font-semibold text-gray-900 "> <?php echo $page ?>
+                            </span> có <span class="font-semibold text-gray-900 "><?php echo count($getProtypes) ?>
+                            </span> trên <span
+                                class="font-semibold text-gray-900 "><?php echo $countProtypes[0]['number']; ?>
+                            </span> sản phẩm
+                        </span>
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="flex items-center -space-x-px text-base h-10 mb-0">
+                                <?php if ($page > 1) : ?>
+                                <li>
+                                    <a href="<?php echo 'Protypes.php?page=' . ($page - 1) ?>"
+                                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                </li>
+                                <?php 
+                        endif;
+                        for ($i = 1; $i <= $total_page; $i++) :
+                            if ($i == $page) :
+                    ?>
+                                <li>
+                                    <a href="<?php echo 'Protypes.php?page=' . $i ?>" aria-current="page"
+                                        class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><?php echo $i ?></a>
+
+                                </li>
+                                <?php else : ?>
+                                <li>
+                                    <a href="<?php echo 'Protypes.php?page=' . $i ?>"
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?php echo $i ?></a>
+                                </li>
+                                <?php
+                            endif;
+                        endfor;
+                        ?>
+                                <?php if ($page < $total_page && $total_page > 1) { ?>
+                                <li>
+                                    <a href="<?php echo 'Protypes.php?page=' . ($page + 1) ?>"
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                </li>
+                                <?php } ?>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
+                <!-- /pagination product -->
             </div>
         </div>
     </div>

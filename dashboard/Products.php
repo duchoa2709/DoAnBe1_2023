@@ -1,23 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Projects</title>
-
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="./dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-
-
-</head>
-
 <?php
     require "./models/config.php";
     require "./models/db.php";
@@ -32,8 +12,61 @@
     $getAllManufacture = $manufacture->getAllManufacture();
 
     $product= new Product;
-    $getAllProducts = $product->getAllProducts();
+    // $getProductsList = $product->getAllProducts();
+
+    // pagination
+    // lấy giá trị limit từ cookies
+    if (isset($_COOKIE['limit'])) {
+        $_SESSION['limit'] = $_COOKIE['limit'];
+    } else {
+        $_SESSION['limit'] = 2;
+    }
+    // lấy giá trị limit từ form
+    if (isset($_GET['limit'])) {
+        $_SESSION['limit'] = $_GET['limit'];
+    }
+    // lưu giá trị limit vào cookies
+    setcookie('limit', $_SESSION['limit'], time() + 3600);
+
+    $limit = $_SESSION['limit'];
+
+    $per_page = 1;
+    $getProductsList = $product->getAllProductsLimit($limit, $per_page);
+    $total_page = ceil(count($product->getAllProducts()) / $limit);
+    $page = isset($_GET['page']) ? $_GET['page'] : 1;
+    if ($page > 1) {
+        $start = ($page * $limit) - $limit;
+    } else {
+        $start = 0;
+    }
+    $getProductsList = $product->getAllProductsLimit($limit, $start);
+
+    // end pagination
+
+    $countProducts = $product->countProducts();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Danh sách sản phẩm: Có <?php echo $countProducts[0]['number']; ?> Sản Phẩm</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+
+</head>
+
+
 
 <body>
     <div class="div flex">
@@ -68,6 +101,7 @@
                 // }
                 ?>
                 <div class="button_add flex justify-between items-center mx-5">
+                    <!-- search -->
                     <form action="/searchProductDashboard" method="get">
                         <div class="flex justify-center items-center md:w-[400px] w-[90%]  md:pl-8">
                             <div class="space-y-10  ">
@@ -113,7 +147,7 @@
                     </thead>
                     <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                         <?php
-                        foreach ($getAllProducts as $product) :
+                        foreach ($getProductsList as $product) :
                         ?>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800 text-center">
@@ -229,27 +263,79 @@
                         ?>
                     </tbody>
                 </table>
-                <!-- pagination -->
-                <div class="panigation p-8 justify-end">
-                    <nav aria-label="Page navigation example">
-                        <ul class="flex items-center -space-x-px h-10 text-base">
-                            <?php
-                            // Assuming $totalPages is the total number of pages
-                            // and $currentPage is the current active page
-                            for ($i = 1; $i <= $totalPages; $i++) {
-                                $isActive = ($i == $currentPage) ? 'bg-gray-100 text-gray-700' : 'hover:bg-gray-100 hover:text-gray-700';
-                                echo "<li>
-                                        <a href=\"?page=$i\"
-                                            class=\"flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 $isActive dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white\">
-                                            $i
-                                        </a>
-                                    </li>";
-                            }
-                            ?>
-                        </ul>
-                    </nav>
-                </div>
+                <!-- pagination product -->
+                <div class="flex justify-between items-center my-3 mr-3 ">
+                    <!-- hiển thị số sản phẩm trên 1 trang -->
+                    <form action="" method="get">
+                        <div class="flex justify-start items-center md:w-[400px] w-[90%]  md:pl-8">
+                            <div class="space-y-10  ">
+                                <div class="flex items-center p-1 space-x-6 h-[40px] bg-white rounded-xl  ">
+                                    <div
+                                        class="flex bg-gray-100 flex items-center px-2 h-[35px] md:w-22 w-52 space-x-4 rounded-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-30" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                        <input class="bg-gray-100 outline-none placeholder:text-sm text-center"
+                                            type="number" name="limit" placeholder="Nhập số hiển thị trên 1 trang"
+                                            value="<?php echo $limit ?>" />
+                                    </div>
+                                    <div
+                                        class="bg-[#0cb0d8] py-1.5 px-5 text-white font-semibold rounded-lg  transition duration-3000 ">
+                                        <input class="text-sm" type="submit" value="Hiển thị">
 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="flex items-center">
+                        <!-- text -->
+                        <span class="text-sm text-gray-700 dark:text-gray-400 mr-5">
+                            Hiển thị trang<span class="font-semibold text-gray-900 "> <?php echo $page ?>
+                            </span> có <span class="font-semibold text-gray-900 "><?php echo count($getProductsList) ?>
+                            </span> trên <span class="font-semibold text-gray-900 "><?php echo $countProducts[0]['number']; ?>
+                            </span> sản phẩm
+                        </span>
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="flex items-center -space-x-px text-base h-10 mb-0">
+                                <?php if ($page > 1) : ?>
+                                <li>
+                                    <a href="<?php echo 'Products.php?page=' . ($page - 1) ?>"
+                                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                                </li>
+                                <?php 
+                        endif;
+                        for ($i = 1; $i <= $total_page; $i++) :
+                            if ($i == $page) :
+                    ?>
+                                <li>
+                                    <a href="<?php echo 'Products.php?page=' . $i ?>" aria-current="page"
+                                        class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><?php echo $i ?></a>
+
+                                </li>
+                                <?php else : ?>
+                                <li>
+                                    <a href="<?php echo 'Products.php?page=' . $i ?>"
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?php echo $i ?></a>
+                                </li>
+                                <?php
+                            endif;
+                        endfor;
+                        ?>
+                                <?php if ($page < $total_page && $total_page > 1) { ?>
+                                <li>
+                                    <a href="<?php echo 'Products.php?page=' . ($page + 1) ?>"
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                                </li>
+                                <?php } ?>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!-- /pagination product -->
             </div>
         </div>
     </div>

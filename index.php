@@ -105,7 +105,7 @@
 											
 
 										
-									
+				
 									</a></li>
 								
 									
@@ -455,8 +455,6 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-
-		<!-- NEWSLETTER -->
 
 		<!-- /FOOTER -->
 		<?php include('footer.php'); ?>

@@ -55,19 +55,15 @@ public function countProducts()
     return $items; //return an array
 }
 
-public function paginationProducts($x, $y)
+public function paginationProducts($x ,$y )
 {
-    $sql = self::$connection->prepare("SELECT * FROM products LIMIT ? OFFSET ?");
-    $sql->bind_param("ii", $y, $x);  // Reversed the order of parameters since LIMIT comes first
-    $sql->execute();
-
-    $result = $sql->get_result();
-    $items = $result->fetch_all(MYSQLI_ASSOC);
-
-    return $items;
+    $sql = self::$connection->prepare("SELECT * FROM products  limit 8  offset ?  ");
+    $sql->bind_param("is", $x , $y);
+    $sql->execute(); //return an object
+    $items = array();
+    $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+    return $items; //return an array
 }
-
-
 public function deleteProducts($x)
 {
     $sql = self::$connection->prepare("DELETE FROM products WHERE id = ?");

@@ -35,6 +35,9 @@
                 $number_type = $count_type[0]['number'];
           }
 ?>
+<?php
+    include('./component/flashArtDoashboard.php');
+?>
 <div class="div flex">
     <div class="w-1/7">
         <?php

@@ -31,7 +31,15 @@
     <link rel="stylesheet" href="./css/font-awesome.min.css">
 
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="..\public\js\app.js"></script>
 </head>
+
+<style>
+    .active {
+        color:#007bff;
+    }
+</style>
 
 <body class="hold-transition sidebar-mini">
     <!-- Main Sidebar Container -->

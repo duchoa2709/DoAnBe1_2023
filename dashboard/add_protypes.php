@@ -21,12 +21,13 @@ $getAllprotypes = $protypes->getAllprotypes();
 $manufacture = new Manufacture();
 
 if(isset($_POST['submit'])){
-    $manu_name = $_POST['name'];
+    $protypes_name = $_POST['name'];
   
 
     $product = new Product();
-    $insertManufacture = $manufacture->insertManufacture($manu_name);
-   header('location:Manufacture.php');
+    $insertProtypes = $protypes->insertProtypes($protypes_name);
+    $_SESSION['notification'] = "Thêm thành công";
+    header('location:Protypes.php');
 
 }
 
@@ -43,7 +44,7 @@ if(isset($_POST['submit'])){
         <form action="" method="post" class="m-10">
             <!-- name -->
             <div class="mb-6">
-                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-black">Name Manufacture</label>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-black">Name Protypes</label>
                 <input type="text" id="name" name="name"
                     class="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"
                     placeholder="Nhập tên sản phẩm" required>
@@ -52,7 +53,7 @@ if(isset($_POST['submit'])){
             <div class="flex justify-end">
                 <button name="submit" type="submit" value="Submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mt-2">Add
-                    Manufacture</button>
+                    Protypes</button>
             </div>
 
         </form>

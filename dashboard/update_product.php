@@ -61,19 +61,19 @@ if(isset($_POST['submit'])){
             move_uploaded_file($_FILES['image']['tmp_name'], $product_photo)) {
                 // Upload thành công thì thêm vào db;
                 if($updateproduct = $product->updateProducts( $id , $name , $manu_id , $type_id , $price , $product_photo , $description , $feature , $created_at )) {
-                    echo "Thêm thành công";
+                    $_SESSION['nofication'] = "Sửa thành công";
                     header('location: Products.php');
                 }
                 else {
-                    echo "Thêm thất bại";
+                    $_SESSION['error'] = "File Lỗi";
                 }
         } else {
-            echo 'Failed';
+            $_SESSION['error'] = "Vui lòng chọn hình ảnh";
         }
     }
     
         if($updateproduct = $product->updateProducts( $id , $name , $manu_id , $type_id , $price , $product_photo , $description , $feature , $created_at )) {
-            echo "Thêm thành công";
+            $_SESSION['nofication'] = "Sửa thành công";
             header('location: Products.php');
         }
 }

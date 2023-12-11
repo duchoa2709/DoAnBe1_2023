@@ -15,22 +15,29 @@ require "models/protypes.php";
 require "models/manufacture.php";
 require "models/products.php";
 
+$type_id = " ";
+if(isset($_GET['id'])){
+    $type_id = intval($_GET['id']);
+}
+
+
 $protypes = new Protypes;
 $getAllprotypes = $protypes->getAllprotypes();
 $product = new Product();
+$manufacture = new Manufacture();
+
+$protypesData = $protypes->getAllprototypesById($type_id);
  
-$types_id = " ";
-if(isset($_GET['type_id'])){
-    $type_id = intval($_GET['type_id']);
-    
-}
+
+
 if(isset($_POST['submit'])){
-    $name = $_POST['name'];
-  $updateproduct = $protypes->updateProtypes( $type_id , $name);
+    $manu_name = $_POST['name'];
+  $protypesUpdate = $protypes->updateProtypes( $type_id , $manu_name);
+  $_SESSION['notification'] = "Sửa thành công";
   header('location:Protypes.php');
 }
 
-$protypesData = $protypes->getAllprotypesById(intval($type_id));
+
 ?>
 
 <div class="flex">
@@ -40,9 +47,7 @@ $protypesData = $protypes->getAllprotypesById(intval($type_id));
         ?>
     </div>
     <div class="w-full container ">
-
         <form action="" method="post" class="m-10">
-
             <!-- name -->
             <div class="mb-6">
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 text-black">Name</label>
@@ -50,10 +55,10 @@ $protypesData = $protypes->getAllprotypesById(intval($type_id));
                     class="shadow-sm bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 bg-gray-200 border-gray-600 placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm-light"
                     placeholder="Nhập tên sản phẩm" required value="<?php echo $protypesData->type_name ?>">
             </div>
-
             <div class="flex justify-end">
                 <button name="submit" type="submit" value="Submit"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mt-2">Edit Protypes</button>
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-800 mt-2">Edit
+                    Protypes</button>
             </div>
 
         </form>

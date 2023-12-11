@@ -104,11 +104,11 @@
 			<div class="phone_zalo">
 							<div class="zalo">
 								
-							<a href="tel:0344842232"><img src="./img/call.png" alt=""></a>
+							<a href="tel:0365114930"><img src="./img/call.png" alt=""></a>
 							</div>
 							<div class="phone">
 								
-								<a href="https://zalo.me/0344842232"><img href="" src="/img/icon-zalo.png" alt=""></a>
+								<a href="https://zalo.me/+84365114930"><img href="" src="./public/images/zalo.png" alt=""></a>
 								
 							</div>
 				</div>

@@ -21,19 +21,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the deletion was successful
         if ($deleteResult) {
             // Redirect to the Products page after successful deletion
+            $_SESSION['nofication'] = "Xóa thành công";
             header('Location: Products.php');
             exit(); // Ensure that no further code is executed after the redirect
         } else {
             // Handle the case where deletion fails
-
-            echo "Failed to delete the product.";
+            $_SESSION['error'] = "Xóa thất bại";
         }
     } else {
         // Handle the case where 'id' parameter is not set in the POST data
-        echo "Invalid product ID.";
+        $_SESSION['error'] = "Không tìm thấy sản phẩm";
     }
 } else {
     // Handle the case where the form was not submitted using POST
-    echo "Invalid form submission.";
+    $_SESSION['error'] = "Không tìm thấy sản phẩm";
 }
 ?>

@@ -92,25 +92,24 @@
                 <?php
                 include('./component/navbarDoashBoard.php');
                 
-                // if (session('success')){
+                if (isset($_SESSION['notification'])) :
                 ?>
-                <!-- <div id="success-message"
-                    class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 shadow-md" role="alert">
-                    <div class="flex">
-                        <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path
-                                    d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
-                            </svg></div>
-                        <div>
-                            <p class="font-bold">Message ^.^</p>
-                            <p class="text-sm">{{ session('success') }}</p>
-
-                        </div>
+                <div id="alert-border-1"
+                    class="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50" role="alert">
+                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <div class="ms-3 text-sm font-medium whitespace-nowrap">
+                        <?php
+                         echo "<b>Thông Báo: </b>" . $_SESSION['notification'];
+                        unset($_SESSION['notification']);
+                        ?>
                     </div>
-                </div> -->
+                </div>
                 <?php
-                // }
+                endif;
                 ?>
                 <div class="button_add flex justify-between items-center mx-5">
                     <form action="/searchProductDashboard" method="get">
@@ -136,10 +135,10 @@
                             </div>
                         </div>
                     </form>
-                    <a href="add_product.php" class="flex justify-center items-center">
+                    <a href="add_protypes.php" class="flex justify-center items-center">
                         <button
                             class="flex  mx-auto  text-white bg-gradient-to-r from-cyan-500 to-blue-500 border-0 py-2 px-9 m-5  rounded text-xs">Add
-                            Product</button>
+                            Protypes</button>
                     </a>
                 </div>
                 <table class="w-full whitespace-no-wrap">
@@ -154,7 +153,8 @@
                         <?php
                         foreach ($getProtypes as $protypes) :
                         ?>
-                        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800 text-center">
+                        <tr
+                            class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800 text-center">
                             <!-- sản phẩm -->
                             <td class="px-3 py-3 w-6/12">
                                 <div class="flex items-center text-sm justify-center">
@@ -168,7 +168,7 @@
                             <!-- button xóa sửa -->
                             <td class="px-4 py-3 6/12">
                                 <div class="flex items-center space-x-4 text-sm justify-center">
-                                    <a href="update_protype.php?id=<?php echo $protypes['type_id'] ?>">
+                                <a href="update_protypes.php?id=<?php echo $protypes['type_id'] ?>">
                                         <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit">
@@ -180,7 +180,7 @@
                                         </button>
                                     </a>
 
-                                    <form action="/deleteProtype" method="post">
+                                    <form action="./del_protypes.php" method="post">
                                         <!-- Add a hidden input field to store the product ID -->
                                         <input type="hidden" name="id" value="<?php echo $protypes['type_id'] ?>">
 
@@ -194,6 +194,7 @@
                                             </svg>
                                         </button>
                                     </form>
+
                                 </div>
                             </td>
                         </tr>

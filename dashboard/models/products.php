@@ -3,7 +3,7 @@ class Product extends DB{
     
 public function getAllProducts ()
 {
-    $sql = self::$connection->prepare("SELECT * FROM products ORDER BY 'id' DESC");
+    $sql = self::$connection->prepare("SELECT * FROM products ORDER BY id DESC");
     $sql->execute(); //return an object
     $items = array();
     $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -11,7 +11,7 @@ public function getAllProducts ()
 }
 public function getAllProductsLimit($x , $y)
 {
-    $sql = self::$connection->prepare("SELECT * FROM products ORDER BY 'id' DESC  limit ?  offset ? ");
+    $sql = self::$connection->prepare("SELECT * FROM products ORDER BY id DESC limit ?  offset ? ");
     $sql->bind_param("ii", $x , $y);
     $sql->execute(); //return an object
     $items = array();

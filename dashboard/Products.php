@@ -96,25 +96,23 @@
                 <?php
                 include('./component/navbarDoashBoard.php');
                 
-                // if (session('success')){
+                if (isset($_SESSION['nofication'])) :
                 ?>
-                <!-- <div id="success-message"
-                    class="bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 shadow-md" role="alert">
-                    <div class="flex">
-                        <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path
-                                    d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z" />
-                            </svg></div>
-                        <div>
-                            <p class="font-bold">Message ^.^</p>
-                            <p class="text-sm">{{ session('success') }}</p>
-
-                        </div>
+                <div id="alert-border-1"
+                    class="flex items-center p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-blue-50" role="alert">
+                    <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                    </svg>
+                    <div class="ms-3 text-sm font-medium whitespace-nowrap">
+                        <?php echo "<b>Thông Báo: </b>" . $_SESSION['nofication'];
+                        unset($_SESSION['nofication']);
+                        ?>
                     </div>
-                </div> -->
+                </div>
                 <?php
-                // }
+                endif;
                 ?>
                 <div class="button_add flex justify-between items-center mx-5">
                     <!-- search -->
@@ -283,7 +281,7 @@
                         ?>
                     </tbody>
                 </table>
-                
+
                 <!-- pagination product -->
                 <div class="flex justify-between items-center my-3 mr-3 ">
                     <!-- hiển thị số sản phẩm trên 1 trang -->
@@ -370,6 +368,13 @@
     <script src="../../dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../dist/js/demo.js"></script>
+
+    <script>
+    let alertBorder = document.getElementById('alert-border-1');
+    setTimeout(function() {
+        alertBorder.style.display = 'none';
+    }, 3000);
+    </script>
 </body>
 
 </html>

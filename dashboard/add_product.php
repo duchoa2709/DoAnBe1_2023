@@ -57,7 +57,7 @@ if(isset($_POST['submit'])){
             move_uploaded_file($_FILES['image']['tmp_name'], $product_photo)) {
             // Upload thành công thì thêm vào db;
             if($insertProducts = $product->insertProducts($name , $manu_id , $type_id , $price , $product_photo , $description , $feature , $created_at)) {
-                echo "Thêm thành công";
+                $_SESSION['nofication'] = "Thêm thành công";
                 header('location: Products.php');
             }
             else {

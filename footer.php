@@ -1,7 +1,6 @@
-
 <div id="newsletter" class="section">
 				<!-- row -->
-				<div class="row">
+				<div class="row ml-0" style="margin-left: 0px; margin-right: 0px;">
 					<div class="col-md-12">
 						<div class="newsletter">
 							<p>Sign Up for the <strong>NEWSLETTER</strong></p>

@@ -116,7 +116,7 @@
                 ?>
                 <div class="button_add flex justify-between items-center mx-5">
                     <!-- search -->
-                    <form action="/searchProductDashboard" method="get">
+                    <form action="./searchProducts.php" method="get">
                         <div class="flex justify-center items-center md:w-[400px] w-[90%]  md:pl-8">
                             <div class="space-y-10  ">
                                 <div class="flex items-center p-1 space-x-6 h-[40px] bg-white rounded-xl  ">
@@ -128,7 +128,7 @@
                                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                         </svg>
                                         <input class="bg-gray-100 outline-none placeholder:text-sm" type="text"
-                                            name="name" placeholder="Article name or keyword..." />
+                                            name="keyWord" placeholder="Nhập từ khóa cần tìm kiếm" value="" />
                                     </div>
                                     <div
                                         class="bg-[#0cb0d8] py-1.5 px-5 text-white font-semibold rounded-lg  transition duration-3000 ">

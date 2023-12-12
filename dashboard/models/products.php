@@ -1,7 +1,7 @@
 <?php
 class Product extends DB{
     
-public function getAllProducts ()
+public function getAllProducts()
 {
     $sql = self::$connection->prepare("SELECT * FROM products ORDER BY id DESC");
     $sql->execute(); //return an object
@@ -36,24 +36,35 @@ public function getAllProductslimit4()
     return $items; //return an array
 }
 
-public function search($keyword)
-{
-    $sql = self::$connection->prepare("SELECT * FROM products  where description  like %?%" );
-    $sql->bind_param("s",$keyword);
-    $sql->execute(); //return an object
-    $items = array();
-    $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
-    return $items; //return an array
-}
 
 public function countProducts()
 {
     $sql = self::$connection->prepare("SELECT count(id) as number from products");
-    $sql->execute(); 
-    $items = array();
-    $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
-    return $items; //return an array
+    $sql->execute();
+    $result = $sql->get_result()->fetch_assoc();
+    return $result['number']; // trả về một giá trị duy nhất
 }
+
+public function searchAndPagination($keyword,$x , $y)
+{
+    $keyword = '%' . $keyword . '%';
+    $sql = self::$connection->prepare("SELECT * FROM products WHERE name LIKE ? ORDER BY id DESC limit ?  offset ?");
+    $sql->bind_param("sii", $keyword , $x , $y);
+    $sql->execute();
+    $items = $sql->get_result()->fetch_all(MYSQLI_ASSOC);
+    return $items;
+}
+
+public function countProductsSearch($keyword)
+{
+    $sql = self::$connection->prepare("SELECT count(id) as number FROM products WHERE name LIKE ?");
+    $keyword = '%' . $keyword . '%';
+    $sql->bind_param("s", $keyword);
+    $sql->execute();
+    $result = $sql->get_result()->fetch_assoc();
+    return $result['number']; // trả về một giá trị duy nhất
+}
+
 
 public function paginationProducts($x ,$y )
 {

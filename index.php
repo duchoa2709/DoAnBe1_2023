@@ -22,7 +22,7 @@
 
 <?php 
 	include('header.php');
-	// include('component/loadhomepage.php');	
+	include('component/loadhomepage.php');	
  ?>
 <!-- BANNER -->
 <?php include('component/slidebanner.php'); ?>

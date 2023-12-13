@@ -1,8 +1,6 @@
 <div id="newsletter" class="section">
-			<!-- container -->
-			<div class="container">
 				<!-- row -->
-				<div class="row">
+				<div class="row ml-0" style="margin-left: 0px; margin-right: 0px;">
 					<div class="col-md-12">
 						<div class="newsletter">
 							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
@@ -105,11 +103,11 @@
 			<div class="phone_zalo">
 							<div class="zalo">
 								
-							<a href="tel:0344842232"><img src="./img/call.png" alt=""></a>
+							<a href="tel:0365114930"><img src="./img/call.png" alt=""></a>
 							</div>
 							<div class="phone">
 								
-								<a href="https://zalo.me/0344842232"><img href="" src="/img/icon-zalo.png" alt=""></a>
+								<a href="https://zalo.me/+84365114930"><img href="" src="./public/images/zalo.png" alt=""></a>
 								
 							</div>
 				</div>

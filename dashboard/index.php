@@ -20,9 +20,9 @@
                 $count_manu = $manufacture->countManufacture();
                 $count_type = $protypes->countProtypes();
 
-                if($count != null && count($count) > 0){
+                if($count != null && $count > 0){
                               
-                  $number = $count[0]['number'];
+                  $number = $count;
                 }
 
                   if($count_manu != null && count($count_manu) > 0){

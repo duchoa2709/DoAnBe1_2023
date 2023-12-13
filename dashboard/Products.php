@@ -68,7 +68,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Danh sách sản phẩm: Có <?php echo $countProducts[0]['number']; ?> Sản Phẩm</title>
+    <title>Danh sách sản phẩm: Có <?php echo $countProducts; ?> Sản Phẩm</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -315,7 +315,7 @@
                             Hiển thị trang<span class="font-semibold text-gray-900 "> <?php echo $page ?>
                             </span> có <span class="font-semibold text-gray-900 "><?php echo count($getProductsList) ?>
                             </span> trên <span
-                                class="font-semibold text-gray-900 "><?php echo $countProducts[0]['number']; ?>
+                                class="font-semibold text-gray-900 "><?php echo $countProducts; ?>
                             </span> sản phẩm
                         </span>
 

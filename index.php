@@ -22,8 +22,12 @@
 
 <?php 
 	include('header.php');
-	include('component/loadhomepage.php');	
- ?>
+
+    if (!isset($_SESSION['load_home_page']) || $_SESSION['load_home_page'] == false) {
+        include('component/loadhomepage.php');    
+        $_SESSION['load_home_page'] = true;
+    }
+?>
 <!-- BANNER -->
 <?php include('component/slidebanner.php'); ?>
 
@@ -37,10 +41,10 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">New Products</h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">New Products</h3>
                     <div class="section-nav">
 
-                        <ul class="section-tab-nav tab-nav">
+                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500" data-aos-easing="ease-in-sine">
 
 
                             <?php foreach($getAllManufacture  as $key => $value): 
@@ -51,9 +55,6 @@
                             <li class="active"><a href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>">
                                     <?php echo $value['manu_name']; ?>
                                     <?php endif; endforeach; ?>
-
-
-
 
                                 </a></li>
 
@@ -74,7 +75,7 @@
             <div class="col-md-12">
                 <div class="row">
 
-                    <div class="products-tabs">
+                    <div class="products-tabs"data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
@@ -96,11 +97,6 @@
 
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
-
-
-
-
-
                                         <h3 class="product-name"><a href="#"><?php echo $value['name'] ?></a></h3>
                                         <h4 class="product-price"> <?php echo number_format($value['price'])  ?> VND
                                         </h4>
@@ -208,9 +204,9 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">Top sellinga</h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Top sellinga</h3>
                     <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav">
+                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500" data-aos-easing="ease-in-sine">
 
 
                             <?php foreach($getAllManufacture  as $key => $value): 
@@ -220,9 +216,6 @@
                             <li class="active"><a href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>">
                                     <?php echo $value['manu_name']; ?>
                                     <?php endif; endforeach; ?>
-
-
-
 
                                 </a></li>
 
@@ -243,7 +236,7 @@
             <!-- Products tab & slick -->
             <div class="col-md-12">
                 <div class="row">
-                    <div class="products-tabs">
+                    <div class="products-tabs" data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
                         <!-- tab -->
                         <div id="tab2" class="tab-pane fade in active">
                             <div class="products-slick" data-nav="#slick-nav-2">
@@ -435,6 +428,9 @@
 <script src="js/jquery.zoom.min.js"></script>
 <script src="js/main.js"></script>
 
+<script>
+AOS.init();
+</script>
 </body>
 
 </html>

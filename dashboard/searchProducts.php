@@ -74,7 +74,7 @@ if ($search == '') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Danh sách sản phẩm: Có <?php echo $countProducts; ?> Sản Phẩm</title>
+    <title>Tìm thấy được <?php echo $countProducts ?> sản phẩm</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

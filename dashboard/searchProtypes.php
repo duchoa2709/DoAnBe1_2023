@@ -6,42 +6,49 @@
     require "./models/products.php";
 
     $protypes = new Protypes;
-    // $getAllprotypes = $protypes->getAllprotypes();
+    $getAllprotypes = $protypes->getAllprotypes();
 
     $manufacture= new Manufacture;
     $getAllManufacture = $manufacture->getAllManufacture();
 
     $product= new Product;
+    // $getProductsList = $product->getAllProducts();
 
-    // pagination
-    // lấy giá trị limit từ cookies
-    if (isset($_COOKIE['limitProtypes'])) {
-        $_SESSION['limitProtypes'] = $_COOKIE['limitProtypes'];
-    } else {
-        $_SESSION['limitProtypes'] = 2;
-    }
-    // lấy giá trị limit từ form
-    if (isset($_GET['limitProtypes'])) {
-        $_SESSION['limitProtypes'] = $_GET['limitProtypes'];
-    }
-    // lưu giá trị limit vào cookies
-    setcookie('limitProtypes', $_SESSION['limitProtypes'], time() + 3600);
+   
+      // pagination
+// lấy giá trị limit từ cookies
+ // lấy giá trị limit từ cookies
+ if (isset($_COOKIE['limitProtypes'])) {
+    $_SESSION['limitProtypes'] = $_COOKIE['limitProtypes'];
+} else {
+    $_SESSION['limitProtypes'] = 2;
+}
+// lấy giá trị limit từ form
+if (isset($_GET['limitProtypes'])) {
+    $_SESSION['limitProtypes'] = $_GET['limitProtypes'];
+}
+// lưu giá trị limit vào cookies
+setcookie('limitProtypes', $_SESSION['limitProtypes'], time() + 3600);
 
-    $limit = $_SESSION['limitProtypes'];
+$limit = $_SESSION['limitProtypes'];
 
-    $per_page = 1;
-    $getProtypes = $protypes->getAllProtypesLimit($limit, $per_page);
-    $total_page = ceil(count($protypes->getAllprotypes()) / $limit);
-    $page = isset($_GET['page']) ? $_GET['page'] : 1;
-    if ($page > 1) {
-        $start = ($page * $limit) - $limit;
-    } else {
-        $start = 0;
-    }
+// search
+$search = isset($_GET['keyWord']) ? $_GET['keyWord'] : '';
+$per_page = $limit; // Đặt số lượng sản phẩm trên mỗi trang bằng giới hạn
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$start = ($page > 1) ? ($page - 1) * $limit : 0;
+$countProtype = $protypes->countProtypes();
+
+if ($search == '') {
     $getProtypes = $protypes->getAllProtypesLimit($limit, $start);
-
-    $countProtypes = $protypes->countProtypes();
-    // end pagination
+    $countProtypes = $countProtype[0]['number'];    
+    $total_page = ceil($countProtypes / $limit);
+} else {
+    $getProtypes = $protypes->searchAndPaginationProtypes($search, $limit, $start);
+    $countProtypes = $protypes->countProtypesSearch($search);
+    $total_page = ceil($countProtypes / $limit);
+}
+// end pagination
 
     //String cut
     function stringCut($text, $limit) {
@@ -67,7 +74,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Danh Sách Protypes</title>
+    <title>Tìm thấy được: <?php echo $countProtypes ?> Protypes</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -168,7 +175,7 @@
                             <!-- button xóa sửa -->
                             <td class="px-4 py-3 6/12">
                                 <div class="flex items-center space-x-4 text-sm justify-center">
-                                <a href="update_protypes.php?id=<?php echo $protypes['type_id'] ?>">
+                                    <a href="update_protypes.php?id=<?php echo $protypes['type_id'] ?>">
                                         <button
                                             class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
                                             aria-label="Edit">
@@ -232,35 +239,51 @@
                     </form>
                     <div class="flex items-center">
                         <!-- text -->
+                        <!-- text -->
                         <span class="text-sm text-gray-700 dark:text-gray-400 mr-5">
-                            Hiển thị trang<span class="font-semibold text-gray-900 "> <?php echo $page ?>
-                            </span> có <span class="font-semibold text-gray-900 "><?php echo count($getProtypes) ?>
-                            </span> trên <span
-                                class="font-semibold text-gray-900 "><?php echo $countProtypes[0]['number']; ?>
+                            Hiển thị trang<span class="font-semibold text-gray-900 "> <?php echo $page ?></span> : 
+                            Có <span class="font-semibold text-gray-900 ">
+                                <?php echo isset($getProtypes) ? count($getProtypes) : 0; ?>
+                            </span>
+                            trên <span class="font-semibold text-gray-900 ">
+                                <?php echo $countProtypes !== null ? $countProtypes : 0; ?>
                             </span> sản phẩm
                         </span>
+
+                        <?php
+                            if ($search == '') {
+                                $param_prev = 'searchProtypes.php?page=' . ($page - 1);
+                                $param_next = 'searchProtypes.php?page=' . ($page + 1);
+                                $param = 'searchProtypes.php?page=';
+                            } else {
+                                $param_prev = 'searchProtypes.php?keyWord=' . $search . '&page=' . ($page - 1);
+                                $param_next = 'searchProtypes.php?keyWord=' . $search . '&page=' . ($page + 1);
+                                $param = 'searchProtypes.php?keyWord=' . $search . '&page=';
+                            }
+                        ?>
 
                         <nav aria-label="Page navigation example">
                             <ul class="flex items-center -space-x-px text-base h-10 mb-0">
                                 <?php if ($page > 1) : ?>
                                 <li>
-                                    <a href="<?php echo 'Protypes.php?page=' . ($page - 1) ?>"
+                                    <a href="<?php echo $param_prev ?>"
                                         class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
                                 </li>
-                                <?php 
-                        endif;
-                        for ($i = 1; $i <= $total_page; $i++) :
-                            if ($i == $page) :
-                    ?>
+                                <?php endif;?>
+                                <?php
+                                for ($i = 1; $i <= $total_page; $i++) :
+                                    if ($i == $page) :
+                                ?>
                                 <li>
-                                    <a href="<?php echo 'Protypes.php?page=' . $i ?>" aria-current="page"
-                                        class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><?php echo $i ?></a>
-
+                                    <a href="<?php echo $param . $i ?>" aria-current="page"
+                                        class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><?php echo $i ?>
+                                    </a>
                                 </li>
                                 <?php else : ?>
                                 <li>
-                                    <a href="<?php echo 'Protypes.php?page=' . $i ?>"
-                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?php echo $i ?></a>
+                                    <a href="<?php echo $param . $i ?>"
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?php echo $i ?>
+                                    </a>
                                 </li>
                                 <?php
                             endif;
@@ -268,7 +291,7 @@
                         ?>
                                 <?php if ($page < $total_page && $total_page > 1) { ?>
                                 <li>
-                                    <a href="<?php echo 'Protypes.php?page=' . ($page + 1) ?>"
+                                    <a href="<?php echo $param_next ?>"
                                         class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
                                 </li>
                                 <?php } ?>

@@ -10,16 +10,16 @@
 							</form>
 							<ul class="newsletter-follow">
 								<li>
-									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-facebook"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-twitter"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-instagram"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-instagram"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-pinterest"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-pinterest"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -84,11 +84,11 @@
 							<div class="footer">
 								<h3 class="footer-title">Service</h3>
 								<ul class="footer-links">
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">View Cart</a></li>
-									<li><a href="#">Wishlist</a></li>
-									<li><a href="#">Track My Order</a></li>
-									<li><a href="#">Help</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">My Account</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">View Cart</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">Wishlist</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">Track My Order</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">Help</a></li>
 								</ul>
 							</div>
 						</div>
@@ -119,12 +119,12 @@
 					<div class="row">
 						<div class="col-md-12 text-center">
 							<ul class="footer-payments">
-								<li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-								<li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-visa"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-credit-card"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-paypal"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-mastercard"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-discover"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-amex"></i></a></li>
 							</ul>
 							<span class="copyright">
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

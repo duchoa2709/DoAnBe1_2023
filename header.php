@@ -232,14 +232,4 @@ if(isset($_SESSION['wishlist'])){
         <!-- /container -->
     </nav>
 
-    <script>
-    function myFunction() {
-
-        document.getElementById("demo").innerHTML = "toan";
-
-    }
-    </script>
-
-
-
     <!-- /NAVIGATION -->

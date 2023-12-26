@@ -1,14 +1,35 @@
-<?php session_start();
+<?php 
 	require "config.php";
   require "models/db.php";
-require "models/products.php";
+  require "models/protypes.php";
+  require "models/manufacture.php";
+  require "models/products.php";
 
 $product= new Product;
 				$getAllProducts = $product->getAllProducts();
-
+        $protypes = new Protypes;
+        $getAllprotypes = $protypes->getAllprotypes();
+      
+        $manufacture= new Manufacture;
+        $getAllManufacture = $manufacture->getAllManufacture();
+      
+        $product= new Product;
+        $getAllProducts = $product->getAllProducts();
+      
+        $getAllProductsLimit1 = $product->getAllProductsLimit(6, 0);
+        $getAllProductsLimit2 = $product->getAllProductsLimit(6, 6);
+        $getAllProductsLimit3 = $product->getAllProductsLimit(6, 12);		
+			
 ?>
 
+<?php 
+	include('header.php');
 
+    if (!isset($_SESSION['load_home_page']) || $_SESSION['load_home_page'] == false) {
+        include('component/loadhomepage.php');    
+        $_SESSION['load_home_page'] = true;
+    }
+?>
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
 <!-- Bootstrap -->
@@ -113,3 +134,16 @@ foreach($getAllProducts as $sp):
   </tfoot> 
  </table>
 </div>
+<?php include('footer.php'); ?>
+
+<!-- jQuery Plugins -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/jquery.zoom.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+AOS.init();
+</script>

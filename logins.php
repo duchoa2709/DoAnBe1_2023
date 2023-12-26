@@ -3,6 +3,7 @@ session_start();
 require "config.php";
 require "models/db.php";
 require "models/user.php";
+$user = new User();
 
 ?>
 
@@ -71,27 +72,28 @@ require "models/user.php";
                     </div>
 
                     <?php
+
                         if (isset($_POST['login'])) {
                             $username = htmlspecialchars($_POST['username']);
                             $password = $_POST['pass'];
-                            $hashedPassword = md5($password);
                         
-                            // In logins.php
-                            $result = $user->checkLogon($username, $hashedPassword);
+                            $result = $user->checkLogon($username, $password);
                         
                             if ($result !== false) {
-                                $_SESSION['roles'] = $result;
+                                $_SESSION['role'] = $result;
                                 $_SESSION['user'] = $username;
                         
                                 if ($result == 1) {
-                                    header("location:\AdminLTE-3\index.php");
+                                    header("location:AdminLTE-3/index.php");
+                                    exit();
                                 } else if ($result == 0) {
                                     header("location:index.php");
+                                    exit();
                                 }
                             } else {
                                 echo "Sai tên đăng nhập hoặc mật khẩu";
                             }
-                        }   
+                        }
                     ?>
 
                     <div class="container-login100-form-btn">
@@ -100,8 +102,8 @@ require "models/user.php";
                         </button>
                     </div>
                     <div class="text-center p-t-90">
-                        <a class="txt1" href="#">
-                            Forgot Password? comingsonn
+                        <a class="txt1" href="register.php">
+                            Register
                         </a>
                     </div>
                 </form>

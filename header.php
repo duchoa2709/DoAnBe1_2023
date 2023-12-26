@@ -71,7 +71,10 @@ if(isset($_SESSION['wishlist'])){
                     <li>
                         <p>
                             <i class="fa fa-dollar"> </i> <a href="logins.php">
-                                <?php if( isset($_SESSION['user'])  )
+                                
+                                <?php 
+
+                                if( isset($_SESSION['user'])  )
 							{
 								echo $_SESSION['user'];
 							}
@@ -145,10 +148,6 @@ if(isset($_SESSION['wishlist'])){
                                     <div class="qty">
 
                                         <?php echo $count; ?>
-
-
-
-
                                     </div>
                                 </a>
                             </div>

@@ -1,25 +1,44 @@
 <?php
 class User extends DB{
 
-    public function checkLogon($user , $password)
-    {
-        $sql = self::$connection->prepare("SELECT * FROM user WHERE user = ? AND password = ?");
-        $password = md5($password);
-        $sql->bind_param("ss", $user, $password);
-        $sql->execute(); // Thực thi câu truy vấn
-        $result = $sql->get_result();
+    public function checkLogon($user, $password)
+{
+    $sql = self::$connection->prepare("SELECT * FROM user WHERE user = ?");
+    $sql->bind_param("s", $user);
+    $sql->execute();
+    $result = $sql->get_result();
+    
 
-        if ($result->num_rows == 1) {
-            // Đăng nhập thành công
-            $row = $result->fetch_assoc( q); // Lấy dòng dữ liệu
-            $roles = $row['roles']; // Lấy giá trị của trường 'roles'
-            
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $storedHashedPassword = trim($row['password']); // Trim leading/trailing spaces
+        $enteredPassword = trim($password); // Trim leading/trailing spaces
+
+        // Debugging
+        // echo "Stored hashed password: $storedHashedPassword<br>";
+        // echo "Entered password: $enteredPassword<br>";
+
+        if (password_verify($enteredPassword, $storedHashedPassword)) {
+            // Login successful
+            $roles = $row['roles'];
+            var_dump($storedHashedPassword, $enteredPassword);
+
+            // Debugging
+            // echo "Login successful<br>";
+
             return $roles;
         } else {
-            // Đăng nhập thất bại
-            return false;
+            // Debugging
+            // echo "Password verification failed<br>";
         }
-    }    
+    }
+
+    // Login failed
+    return false;
+}
+
+    
+    
 
     public function getAllAdmin ()
     {

@@ -1,4 +1,4 @@
-<?php  session_start();
+<?php  
 				require "config.php";
 				require "models/db.php";
 				require "models/protypes.php";
@@ -9,6 +9,18 @@
 
 				$product= new Product;
 				$getAllProducts = $product->getAllProducts();
+                $protypes = new Protypes;
+	$getAllprotypes = $protypes->getAllprotypes();
+
+	$manufacture= new Manufacture;
+	$getAllManufacture = $manufacture->getAllManufacture();
+
+	$product= new Product;
+	$getAllProducts = $product->getAllProducts();
+
+	$getAllProductsLimit1 = $product->getAllProductsLimit(6, 0);
+	$getAllProductsLimit2 = $product->getAllProductsLimit(6, 6);
+	$getAllProductsLimit3 = $product->getAllProductsLimit(6, 12);		
 ?>
 
 
@@ -29,7 +41,14 @@
 
 <!-- Custom stlylesheet -->
 <link type="text/css" rel="stylesheet" href="css/style.css" />
+<?php 
+	include('header.php');
 
+    if (!isset($_SESSION['load_home_page']) || $_SESSION['load_home_page'] == false) {
+        include('component/loadhomepage.php');    
+        $_SESSION['load_home_page'] = true;
+    }
+?>
 <h2 class="text-center"> Your Wish List </h2>
 <div class="container">
     <table id="cart" class="table table-hover table-condensed">
@@ -77,3 +96,16 @@
             </tfoot>
     </table>
 </div>
+<?php include('footer.php'); ?>
+
+<!-- jQuery Plugins -->
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/jquery.zoom.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+AOS.init();
+</script>

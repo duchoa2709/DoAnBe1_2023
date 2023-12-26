@@ -1,8 +1,6 @@
 <div id="newsletter" class="section">
-			<!-- container -->
-			<div class="container">
 				<!-- row -->
-				<div class="row">
+				<div class="row ml-0" style="margin-left: 0px; margin-right: 0px;">
 					<div class="col-md-12">
 						<div class="newsletter">
 							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
@@ -12,16 +10,16 @@
 							</form>
 							<ul class="newsletter-follow">
 								<li>
-									<a href="#"><i class="fa fa-facebook"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-facebook"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-twitter"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-twitter"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-instagram"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-instagram"></i></a>
 								</li>
 								<li>
-									<a href="#"><i class="fa fa-pinterest"></i></a>
+									<a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-pinterest"></i></a>
 								</li>
 							</ul>
 						</div>
@@ -86,11 +84,11 @@
 							<div class="footer">
 								<h3 class="footer-title">Service</h3>
 								<ul class="footer-links">
-									<li><a href="#">My Account</a></li>
-									<li><a href="#">View Cart</a></li>
-									<li><a href="#">Wishlist</a></li>
-									<li><a href="#">Track My Order</a></li>
-									<li><a href="#">Help</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">My Account</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">View Cart</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">Wishlist</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">Track My Order</a></li>
+									<li><a href="https://www.facebook.com/id3103200327092003">Help</a></li>
 								</ul>
 							</div>
 						</div>
@@ -105,11 +103,11 @@
 			<div class="phone_zalo">
 							<div class="zalo">
 								
-							<a href="tel:0344842232"><img src="./img/call.png" alt=""></a>
+							<a href="tel:0365114930"><img src="./img/call.png" alt=""></a>
 							</div>
 							<div class="phone">
 								
-								<a href="https://zalo.me/0344842232"><img href="" src="/img/icon-zalo.png" alt=""></a>
+								<a href="https://zalo.me/+84365114930"><img href="" src="./public/images/zalo.png" alt=""></a>
 								
 							</div>
 				</div>
@@ -121,12 +119,12 @@
 					<div class="row">
 						<div class="col-md-12 text-center">
 							<ul class="footer-payments">
-								<li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-								<li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-visa"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-credit-card"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-paypal"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-mastercard"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-discover"></i></a></li>
+								<li><a href="https://www.facebook.com/id3103200327092003"><i class="fa fa-cc-amex"></i></a></li>
 							</ul>
 							<span class="copyright">
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->

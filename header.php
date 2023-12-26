@@ -224,19 +224,9 @@ echo $_SESSION['wishlist']['1'];
 
                 <!-- /NAV -->
             </div>
-            <!-- /responsive-nav -->
         </div>
         <!-- /container -->
     </nav>
-
-    <script>
-    function myFunction() {
-
-        document.getElementById("demo").innerHTML = "toan";
-
-    }
-    </script>
-
 
 
     <!-- /NAVIGATION -->

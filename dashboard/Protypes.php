@@ -211,6 +211,9 @@
                 <div class="flex justify-between items-center my-3 mr-3 ">
                     <!-- hiển thị số sản phẩm trên 1 trang -->
                     <form action="" method="get">
+                        <p class="pl-8 text-sm text-gray-700 dark:text-gray-400">
+                            Nhập số hiển thị số lượng sản phẩm trên 1 trang
+                        </p>
                         <div class="flex justify-start items-center md:w-[400px] w-[90%]  md:pl-8">
                             <div class="space-y-10  ">
                                 <div class="flex items-center p-1 space-x-6 h-[40px] bg-white rounded-xl  ">

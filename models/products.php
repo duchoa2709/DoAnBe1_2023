@@ -129,6 +129,24 @@ public function insertProductOrder ($id_detail ,$name , $price , $qty )
    
 }
 
+public function searchAndType($key, $type_id) {
+    $key = "%$key%"; // Thêm dấu '%' vào giá trị của biến key
+
+    $sql = self::$connection->prepare("SELECT products.*
+        FROM products
+        JOIN protypes ON products.type_id = protypes.type_id
+        WHERE products.name LIKE ? AND protypes.type_id = ?");
+    $sql->bind_param("si", $key, $type_id);
+    $sql->execute();
+
+    // Xử lý kết quả trả về ở đây, ví dụ:
+    $result = $sql->get_result();
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+    return $rows;
+}
+
+
 
 
 

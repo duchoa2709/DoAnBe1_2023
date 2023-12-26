@@ -20,17 +20,12 @@
                 if(isset($_GET['keyword'])){
                     $key = $_GET['keyword'];
                 }
+
+				if (isset($_GET['type_id'])) {
+					$type_id = $_GET['type_id'];
+				}
                 
-                $search = $product->search($key);
-
-			
-
-			
-				
-			
-
-				
-				
+                $search = $product->searchAndType($key , $type_id);
 ?>
 
 
@@ -46,9 +41,8 @@
 					<div class="col-md-12">
 						<ul class="breadcrumb-tree">
 							<li><a href="#">Home</a></li>
-							<li><a href="#">All Categories</a></li>
-							<li><a href="#">Accessories</a></li>
-							<li class="active">Headphones (227,490 Results)</li>
+							<li><a href="#">Search</a></li>
+							<li class="active"><?php echo $_GET['keyword'] ?></li>
 						</ul>
 					</div>
 				</div>
@@ -98,8 +92,6 @@
 									<div class="product-img">
 										<img src="./img/<?php echo $value['image'] ?>" alt="">
 										<div class="product-label">
-											<span class="sale">-30%</span>
-											<span class="new">NEW</span>
 										</div>
 									</div>
 									<div class="product-body">

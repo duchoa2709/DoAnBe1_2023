@@ -23,10 +23,21 @@
 <?php 
 	include('header.php');
 
-    if (!isset($_SESSION['load_home_page']) || $_SESSION['load_home_page'] == false) {
+    if (!isset($_SESSION['load_home_page'])) {
         include('component/loadhomepage.php');    
         $_SESSION['load_home_page'] = true;
     }
+    
+    if (isset($_SESSION['load_home_page']) && isset($_SESSION['time_start'])) {
+        $time = time() - $_SESSION['time_start'];
+        if ($time > 5) {
+            unset($_SESSION['load_home_page'], $_SESSION['time_start']);
+        }
+    } else {
+        $_SESSION['time_start'] = time();
+    }
+    
+    
 ?>
 <!-- BANNER -->
 <?php include('component/slidebanner.php'); ?>
@@ -41,10 +52,12 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">New Products</h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">New
+                        Products</h3>
                     <div class="section-nav">
 
-                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500" data-aos-easing="ease-in-sine">
+                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500"
+                            data-aos-easing="ease-in-sine">
 
 
                             <?php foreach($getAllManufacture  as $key => $value): 
@@ -75,7 +88,7 @@
             <div class="col-md-12">
                 <div class="row">
 
-                    <div class="products-tabs"data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
+                    <div class="products-tabs" data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
@@ -204,9 +217,11 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Top sellinga</h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Top
+                        sellinga</h3>
                     <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500" data-aos-easing="ease-in-sine">
+                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500"
+                            data-aos-easing="ease-in-sine">
 
 
                             <?php foreach($getAllManufacture  as $key => $value): 
@@ -371,10 +386,6 @@
                     </div>
                     <?php if($key % 3 == 2) echo "</div>" ?>
                     <?php  endforeach; ?>
-
-
-
-
                 </div>
             </div>
 

@@ -10,6 +10,8 @@ if(isset($_SESSION['wishlist'])){
 		$count = $count + $value;
 	}
 }
+
+echo $_SESSION['wishlist']['1'];
 ?>
 
 <!DOCTYPE html>

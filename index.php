@@ -22,8 +22,12 @@
 
 <?php 
 	include('header.php');
-	include('component/loadhomepage.php');	
- ?>
+
+    if (!isset($_SESSION['load_home_page']) || $_SESSION['load_home_page'] == false) {
+        include('component/loadhomepage.php');    
+        $_SESSION['load_home_page'] = true;
+    }
+?>
 <!-- BANNER -->
 <?php include('component/slidebanner.php'); ?>
 
@@ -37,10 +41,10 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">New Products</h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">New Products</h3>
                     <div class="section-nav">
 
-                        <ul class="section-tab-nav tab-nav">
+                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500" data-aos-easing="ease-in-sine">
 
 
                             <?php foreach($getAllManufacture  as $key => $value): 
@@ -51,9 +55,6 @@
                             <li class="active"><a href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>">
                                     <?php echo $value['manu_name']; ?>
                                     <?php endif; endforeach; ?>
-
-
-
 
                                 </a></li>
 
@@ -74,7 +75,7 @@
             <div class="col-md-12">
                 <div class="row">
 
-                    <div class="products-tabs">
+                    <div class="products-tabs"data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
                         <!-- tab -->
                         <div id="tab1" class="tab-pane active">
                             <div class="products-slick" data-nav="#slick-nav-1">
@@ -96,11 +97,6 @@
 
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
-
-
-
-
-
                                         <h3 class="product-name"><a href="#"><?php echo $value['name'] ?></a></h3>
                                         <h4 class="product-price"> <?php echo number_format($value['price'])  ?> VND
                                         </h4>
@@ -208,9 +204,9 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title">Top sellinga</h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Top sellinga</h3>
                     <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav">
+                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500" data-aos-easing="ease-in-sine">
 
 
                             <?php foreach($getAllManufacture  as $key => $value): 
@@ -220,9 +216,6 @@
                             <li class="active"><a href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>">
                                     <?php echo $value['manu_name']; ?>
                                     <?php endif; endforeach; ?>
-
-
-
 
                                 </a></li>
 
@@ -243,64 +236,62 @@
             <!-- Products tab & slick -->
             <div class="col-md-12">
                 <div class="row">
-                    <div class="products-tabs">
-                        <div class="" data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
-                            <!-- tab -->
-                            <div id="tab2" class="tab-pane fade in active">
-                                <div class="products-slick" data-nav="#slick-nav-2">
-                                    <!-- product -->
-                                    <?php 
+                    <div class="products-tabs" data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
+                        <!-- tab -->
+                        <div id="tab2" class="tab-pane fade in active">
+                            <div class="products-slick" data-nav="#slick-nav-2">
+                                <!-- product -->
+                                <?php 
 										foreach($getAllProducts as $value):
 										?>
-                                    <div class="product">
-                                        <div class="product-img">
-                                            <img src="./img/<?php echo $value['image'] ?>" alt="">
-                                            <div class="product-label">
-                                                <span class="new">NEW</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="product-body">
-                                            <p class="product-category">Category</p>
-
-
-
-
-
-                                            <h3 class="product-name"><a href="#"><?php echo $value['name'] ?></a></h3>
-                                            <h4 class="product-price"> <?php echo number_format($value['price'])  ?> VND
-                                            </h4>
-                                            <div class="product-rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                            <div class="product-btns">
-                                                <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
-                                                        class="tooltipp">add to wishlist</span></button>
-                                                <button class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                                        class="tooltipp">add to compare</span></button>
-                                                <button class="quick-view"><i class="fa fa-eye"></i><span
-                                                        class="tooltipp">quick view</span></button>
-                                            </div>
-                                        </div>
-                                        <div class="add-to-cart">
-                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <a
-                                                    href="?action=add_to_cart&id=<?php echo $value['id'] ?>">add to
-                                                    cart</a></button>
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="./img/<?php echo $value['image'] ?>" alt="">
+                                        <div class="product-label">
+                                            <span class="new">NEW</span>
                                         </div>
                                     </div>
 
-                                    <?php endforeach ?>
+                                    <div class="product-body">
+                                        <p class="product-category">Category</p>
 
 
+
+
+
+                                        <h3 class="product-name"><a href="#"><?php echo $value['name'] ?></a></h3>
+                                        <h4 class="product-price"> <?php echo number_format($value['price'])  ?> VND
+                                        </h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
+                                                    class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                    class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><i class="fa fa-eye"></i><span
+                                                    class="tooltipp">quick view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <a
+                                                href="?action=add_to_cart&id=<?php echo $value['id'] ?>">add to
+                                                cart</a></button>
+                                    </div>
                                 </div>
-                                <div id="slick-nav-2" class="products-slick-nav"></div>
+
+                                <?php endforeach ?>
+
+
                             </div>
-                            <!-- /tab -->
+                            <div id="slick-nav-2" class="products-slick-nav"></div>
                         </div>
+                        <!-- /tab -->
                     </div>
                 </div>
             </div>
@@ -320,7 +311,7 @@
         <div class="grid grid-rows-3">
             <div class="col-md-4 col-xs-6">
                 <div class="section-title">
-                    <h4 class="title">Top selling</h4>
+                    <h4 class="title">Top sellingb</h4>
                     <div class="section-nav">
                         <div id="slick-nav-3" class="products-slick-nav"></div>
                     </div>
@@ -354,7 +345,7 @@
 
             <div class="col-md-4 col-xs-6">
                 <div class="section-title">
-                    <h4 class="title">Top selling</h4>
+                    <h4 class="title">Top sellingc</h4>
                     <div class="section-nav">
                         <div id="slick-nav-4" class="products-slick-nav"></div>
                     </div>
@@ -389,7 +380,7 @@
 
             <div class="col-md-4 col-xs-6">
                 <div class="section-title">
-                    <h4 class="title">Top selling</h4>
+                    <h4 class="title">Top sellingd</h4>
                     <div class="section-nav">
                         <div id="slick-nav-5" class="products-slick-nav"></div>
                     </div>
@@ -430,10 +421,6 @@
 <?php include('footer.php'); ?>
 
 <!-- jQuery Plugins -->
-
-<script>
-AOS.init();
-</script>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/slick.min.js"></script>
@@ -441,6 +428,9 @@ AOS.init();
 <script src="js/jquery.zoom.min.js"></script>
 <script src="js/main.js"></script>
 
+<script>
+AOS.init();
+</script>
 </body>
 
 </html>

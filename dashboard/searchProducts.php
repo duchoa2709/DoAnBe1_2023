@@ -65,7 +65,16 @@ if ($search == '') {
         return mb_substr($stringCut, 0, $lastSpacePos) . "...";
     }
     // end String cut
-
+    if ($search == '') {
+        $param_prev = 'searchProducts.php?page=' . ($page - 1);
+        $param_next = 'searchProducts.php?page=' . ($page + 1);
+        $param = 'searchProducts.php?page=';
+    } else {
+        $param_prev = 'searchProducts.php?keyWord=' . $search . '&page=' . ($page - 1);
+        $param_next = 'searchProducts.php?keyWord=' . $search . '&page=' . ($page + 1);
+        $param = 'searchProducts.php?keyWord=' . $search . '&page=';
+    }
+   
 ?>
 
 <!DOCTYPE html>
@@ -122,10 +131,10 @@ if ($search == '') {
                 ?>
                 <div class="button_add flex justify-between items-center mx-5">
                     <!-- search -->
-                    <form action="" method="get">
-                        <div class="flex justify-center items-center md:w-[400px] w-[90%]  md:pl-8">
-                            <div class="space-y-10  ">
-                                <div class="flex items-center p-1 space-x-6 h-[40px] bg-white rounded-xl  ">
+                    <form action="searchProducts.php" method="get">
+                        <div class="flex justify-center items-center md:w-[400px] w-[90%] md:pl-8">
+                            <div class="space-y-10">
+                                <div class="flex items-center p-1 space-x-6 h-[40px] bg-white rounded-xl">
                                     <div
                                         class="flex bg-gray-100 flex items-center px-2 h-[35px] md:w-72 w-52 space-x-4 rounded-lg">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-30" fill="none"
@@ -136,16 +145,22 @@ if ($search == '') {
                                         <input class="bg-gray-100 outline-none placeholder:text-sm" type="text"
                                             name="keyWord" placeholder="Nhập từ khóa cần tìm kiếm"
                                             value="<?php echo $search ?>" />
+
+                                        <input class="bg-gray-100 outline-none placeholder:text-sm text-center"
+                                            type="number" name="limitProduct"
+                                            placeholder="Nhập số hiển thị trên 1 trang" value="<?php echo $limit ?>"
+                                            hidden />
                                     </div>
                                     <div
                                         class="bg-[#0cb0d8] py-1.5 px-5 text-white font-semibold rounded-lg  transition duration-3000 ">
                                         <input class="text-sm" type="submit" value="Search">
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
+
+
                     <a href="add_product.php" class="flex justify-center items-center">
                         <button
                             class="flex  mx-auto  text-white bg-gradient-to-r from-cyan-500 to-blue-500 border-0 py-2 px-9 m-5  rounded text-xs">Add
@@ -292,7 +307,7 @@ if ($search == '') {
                 <!-- pagination product -->
                 <div class="flex justify-between items-center my-3 mr-3 ">
                     <!-- hiển thị số sản phẩm trên 1 trang -->
-                    <form action="" method="get">
+                    <form action="searchProducts.php" method="get">
                         <div class="flex justify-start items-center md:w-[400px] w-[90%]  md:pl-8">
                             <div class="space-y-10  ">
                                 <div class="flex items-center p-1 space-x-6 h-[40px] bg-white rounded-xl  ">
@@ -303,6 +318,9 @@ if ($search == '') {
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                                         </svg>
+                                        <input class="bg-gray-100 outline-none placeholder:text-sm" type="text"
+                                            name="keyWord" placeholder="Nhập từ khóa cần tìm kiếm"
+                                            value="<?php echo $search ?>" hidden />
                                         <input class="bg-gray-100 outline-none placeholder:text-sm text-center"
                                             type="number" name="limitProduct"
                                             placeholder="Nhập số hiển thị trên 1 trang" value="<?php echo $limit ?>" />
@@ -328,18 +346,6 @@ if ($search == '') {
                             </span> sản phẩm
                         </span>
 
-                        <?php
-                            if ($search == '') {
-                                $param_prev = 'searchProducts.php?page=' . ($page - 1);
-                                $param_next = 'searchProducts.php?page=' . ($page + 1);
-                                $param = 'searchProducts.php?page=';
-                            } else {
-                                $param_prev = 'searchProducts.php?keyWord=' . $search . '&page=' . ($page - 1);
-                                $param_next = 'searchProducts.php?keyWord=' . $search . '&page=' . ($page + 1);
-                                $param = 'searchProducts.php?keyWord=' . $search . '&page=';
-                            }
-                        ?>
-
                         <nav aria-label="Page navigation example">
                             <ul class="flex items-center -space-x-px text-base h-10 mb-0">
                                 <?php if ($page > 1) : ?>
@@ -347,26 +353,30 @@ if ($search == '') {
                                     <a href="<?php echo $param_prev ?>"
                                         class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
                                 </li>
-                                <?php endif;?>
+                                <?php endif; ?>
+
                                 <?php
-                                for ($i = 1; $i <= $total_page; $i++) :
-                                    if ($i == $page) :
+                                    $pages_to_show = 2; // Số lượng trang bạn muốn hiển thị xung quanh trang hiện tại
+                                    $start_page = max(1, $page - $pages_to_show);
+                                    $end_page = min($total_page, $page + $pages_to_show);
+
+                                    for ($i = $start_page; $i <= $end_page; $i++) :
+                                        if ($i == $page) :
                                 ?>
                                 <li>
                                     <a href="<?php echo $param . $i ?>" aria-current="page"
-                                        class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><?php echo $i ?>
-                                    </a>
+                                        class="flex items-center justify-center px-4 h-10 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"><?php echo $i ?></a>
                                 </li>
                                 <?php else : ?>
                                 <li>
                                     <a href="<?php echo $param . $i ?>"
-                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?php echo $i ?>
-                                    </a>
+                                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"><?php echo $i ?></a>
                                 </li>
                                 <?php
-                            endif;
-                        endfor;
-                        ?>
+                                    endif;
+                                endfor;
+                                ?>
+
                                 <?php if ($page < $total_page && $total_page > 1) { ?>
                                 <li>
                                     <a href="<?php echo $param_next ?>"

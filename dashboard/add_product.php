@@ -45,18 +45,27 @@ if(isset($_POST['submit'])){
     $feature = isset($_POST['feature']) ? 1 : 0;
     $created_at = date('Y-m-d h:i:s', time());
 
-    if(isset($_FILES['image']['name'])){
-        // Thêm thời gian vào tên file
-        $timestamp = time();
-        $file_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $file_name = $timestamp .'_' .$_FILES['image']['name']. '.' . $file_extension;
-    
-        $product_photo = '../public/upload/' . $file_name;
-    
-        if( is_uploaded_file($_FILES['image']['tmp_name']) &&
-            move_uploaded_file($_FILES['image']['tmp_name'], $product_photo)) {
+    if(isset($_FILES['images']['name'])){
+        $file_names = $_FILES['images']['name'];
+        $file_tmpnames = $_FILES['images']['tmp_name'];
+        $file_errors = $_FILES['images']['error'];
+        $uploaded_files = [];
+
+        for($i = 0; $i < count($file_names); $i++) {
+            $timestamp = time();
+            $file_extension = pathinfo($file_names[$i], PATHINFO_EXTENSION);
+            $file_name = $timestamp .'_' .$file_names[$i]. '.' . $file_extension;
+            $product_photo = '../public/upload/' . $file_name;
+
+            if($file_errors[$i] === 0 && move_uploaded_file($file_tmpnames[$i], $product_photo)) {
+                $uploaded_files[] = $product_photo;
+            }
+        }
+
+        if(count($uploaded_files) > 0) {
             // Upload thành công thì thêm vào db;
-            if($insertProducts = $product->insertProducts($name , $manu_id , $type_id , $price , $product_photo , $description , $feature , $created_at)) {
+            // You might need to modify the insertProducts method to accept an array of images
+            if($insertProducts = $product->insertProducts($name , $manu_id , $type_id , $price , $uploaded_files , $description , $feature , $created_at)) {
                 $_SESSION['nofication'] = "Thêm thành công";
                 header('location: Products.php');
             }
@@ -71,7 +80,6 @@ if(isset($_POST['submit'])){
     else {
        $_SESSION['error'] = "Vui lòng chọn hình ảnh";
     }
-   
 }
 
 ?>
@@ -140,7 +148,7 @@ if(isset($_POST['submit'])){
                             </div>
                         </div>
                     </div>
-                    <input id="image" type="file" name="image" accept="image/*" onchange="loadFile(event)"
+                    <input id="image" type="file" name="images[]" accept="image/*" onchange="loadFile(event)" multiple
                         class=" p-2 block h-12 w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-white  focus:outline-none border-gray-600 placeholder-gray-400"
                         aria-describedby="user_avatar_help">
                 </div>

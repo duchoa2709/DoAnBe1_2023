@@ -52,10 +52,32 @@ $getAllprotypes = $protypes->getAllprotypes();
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-    <!-- animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <!-- jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+
+    <style>
+    /* Customize scrollbar for Chrome, Safari and Opera */
+    body::-webkit-scrollbar {
+        width: 1rem;
+    }
+
+    body::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        background-color: #1e1f29;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: red;
+    }
+
+    /* Customize scrollbar for IE and Edge */
+    body {
+        scrollbar-width: thin;
+        scrollbar-color: darkgrey slategrey;
+    }
+</style>
 </head>
 
 <body>

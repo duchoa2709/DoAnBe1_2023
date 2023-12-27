@@ -1,3 +1,25 @@
+<style>
+    /* Customize scrollbar for Chrome, Safari and Opera */
+    .image-container::-webkit-scrollbar {
+        width: 1px;
+    }
+
+    .image-container::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-container::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+        outline: 1px solid slategrey;
+    }
+
+    /* Customize scrollbar for IE and Edge */
+    .image-container {
+        scrollbar-width: thin;
+        scrollbar-color: darkgrey slategrey;
+    }
+</style>
+
 <?php
     require "./models/config.php";
     require "./models/db.php";
@@ -153,6 +175,7 @@
                     <thead>
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                            <th class="px-4 py-3 text-center">Image</th>
                             <th class="px-4 py-3 text-center">Name</th>
                             <th class="px-4 py-3 text-center">Description</th>
                             <th class="px-4 py-3 text-center">Price</th>
@@ -170,15 +193,33 @@
                         <tr
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800 text-center">
                             <!-- sản phẩm -->
-                            <td class="px-3 py-3 w-3/12">
+                            <td class="px-3 py-3 w-2/12">
                                 <div class="flex items-center text-sm">
                                     <!-- Avatar with inset shadow -->
-                                    <div class="relative hidden w-28  h-28 object-contain  mr-3 rounded-full md:block">
-                                        <img class="object-contain w-full h-full " src="<?php echo $product['image'] ?>"
-                                            alt="" loading="lazy">
-                                        <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                    <?php
+                                        // Chia chuỗi hình ảnh thành một mảng
+                                        $images = explode(",", $product['image']);
+                                    ?>
+                                    <div class="image-container" style="height: 100px; overflow: auto; width:200px;">
+                                        <?php
+                                            // Lặp qua mảng hình ảnh và hiển thị từng hình ảnh
+                                            foreach ($images as $image) {
+                                        ?>
+                                        <div
+                                            class="relative hidden w-28 h-28 object-contain mr-3 rounded-full md:block">
+                                            <img class="object-contain w-full h-full" src="<?php echo $image ?>" alt=""
+                                                loading="lazy" style="width: 100%;">
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true">
+                                            </div>
                                         </div>
+                                        <?php
+                                            }
+                                        ?>
                                     </div>
+                                </div>
+                            </td>
+                            <td class="px-3 py-3 w-2/12">
+                                <div class="flex items-center text-sm justify-center">
                                     <!-- Name -->
                                     <div>
                                         <p class="font-semibold"><?php echo $product['name'] ?></p>

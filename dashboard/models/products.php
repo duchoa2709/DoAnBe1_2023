@@ -94,10 +94,14 @@ public function deleteProducts($x)
 }
 
 
-public function insertProducts($name, $manu_id, $type_id, $price, $image, $description, $feature, $created_at)
+public function insertProducts($name, $manu_id, $type_id, $price, $images, $description, $feature, $created_at)
 {
+    // Tạo chuỗi hình ảnh bằng cách nối các đường dẫn hình ảnh lại với nhau
+    // Sử dụng dấu phẩy làm dấu phân cách
+    $imageString = implode(",", $images);
+
     $sql = self::$connection->prepare("INSERT INTO products (name, manu_id, type_id, price, image, description, feature, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $sql->bind_param("siiissss", $name, $manu_id, $type_id, $price, $image, $description, $feature, $created_at);
+    $sql->bind_param("siiissss", $name, $manu_id, $type_id, $price, $imageString, $description, $feature, $created_at);
 
     // Thực hiện câu lệnh và kiểm tra kết quả
     if ($sql->execute()) {

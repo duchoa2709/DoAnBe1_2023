@@ -1,4 +1,4 @@
-<?php  session_start();
+<?php
 				require "config.php";
 				require "models/db.php";
 				require "models/protypes.php";
@@ -30,8 +30,10 @@
 <!-- Custom stlylesheet -->
 <link type="text/css" rel="stylesheet" href="css/style.css" />
 
+<?php include 'header.php'; ?>
+
 <h2 class="text-center"> Your Wish List </h2>
-<div class="container">
+<div class="container" style="margin-top: 50px; padding-bottom: 50px;">
     <table id="cart" class="table table-hover table-condensed">
         <thead>
             <tr>
@@ -77,3 +79,5 @@
             </tfoot>
     </table>
 </div>
+
+<?php include 'footer.php'; ?>

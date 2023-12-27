@@ -1,171 +1,140 @@
-<Style>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Swiper demo</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+    <!-- Link Swiper's CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
 
-.banner #slider {
-    width: 100%;
-    margin: 0 auto;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.4);
-    ;
-}
+    <!-- Demo styles -->
+    <style>
+      html,
+      body {
+        position: relative;
+        height: 100%;
+      }
 
-.banner .slide {
-    width: 100%;
+      body {
+        background: #fff;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
 
-    display: none;
-    animation-name: fade;
-    animation-duration: 1s;
-
-}
- 
-.banner img {
-    width: 100%;
-}
-
-@keyframes fade {
-    from {
-        opacity: 0.5;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-.banner .controls {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.5em;
-    padding: 15px 10px;
-    border-radius: 5px;
-
-}
-
-.banner .controls:hover {
-    background: white;
-    transition: 0.3s;
-}
-
-.banner .controls:active {
-    color: grey;
-}
-
-.banner #left-arrow {
-    left: 10px;
-}
-
-.banner #right-arrow {
-    right: 10px;
-}
-
-.banner #dots-con {
-
-    text-align: center;
-}
-
-.banner .dot {
-    display: inline-block;
-    background: grey;
-    padding: 8px;
-    border-radius: 50%;
-    margin: 10px 5px;
-}
-
-.banner .active {
-    background: crimson;
-}
-
-@media (max-width:576px) {
-    #slider {
+      .swiper {
         width: 100%;
+        height: 70%;
+      }
 
-    }
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-    .controls {
-        font-size: 1em;
-    }
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
 
-    #dots-con {
-        display: none;
-    }
-}
-</Style>
-<!--Slider-->
-<div class="banner">
-    <div id="slider">
-        <div class="slide" style="background:dodgerBlue;">
-            <img src=".\public\images\banner\banner1.jpeg">
-        </div>
+      .autoplay-progress {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        z-index: 10;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: var(--swiper-theme-color);
+      }
 
-        <div class="slide" style="background:coral;">
-            <img
-                src="./public\images\banner\banner2.jpg">
-        </div>
+      .autoplay-progress svg {
+        --progress: 0;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        stroke-width: 4px;
+        stroke: var(--swiper-theme-color);
+        fill: none;
+        stroke-dashoffset: calc(125.6 * (1 - var(--progress)));
+        stroke-dasharray: 125.6;
+        transform: rotate(-90deg);
+      }
+    </style>
+  </head>
 
-        <div class="slide" style="background:crimson;">
-            <img
-                src="./public\images\banner\banner3.jpg">
-        </div>
-
-        <div class="slide" style="background: #6edf10;">
-            <img src="./public\images\banner\banner4.cms">
-        </div>
-
-        <!--Controlling arrows-->
-        <span class="controls" onclick="prevSlide(-1)" id="left-arrow"><i class="fa fa-arrow-left"
-                aria-hidden="true"></i>
-        </span>
-        <span class="controls" id="right-arrow" onclick="nextSlide(1)"><i class="fa fa-arrow-right"
-                aria-hidden="true"></i>
-        </span>
+  <body>
+    <!-- Swiper -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="./public/images/banner/banner1.jpeg" alt=""></div>
+        <div class="swiper-slide"><img src="./public/images/banner/banner2.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="./public/images/banner/banner3.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="./public/images/banner/banner4.cms" alt=""></div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+      <div class="autoplay-progress">
+        <svg viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="20"></circle>
+        </svg>
+        <span></span>
+      </div>
     </div>
-    <div id="dots-con">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    </div>
-</div>
-<script>
-var slides = document.querySelectorAll(".slide");
-var dots = document.querySelectorAll(".dot");
-var index = 0;
 
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-function prevSlide(n) {
-    index += n;
-    console.log("prevSlide is called");
-    changeSlide();
-}
-
-function nextSlide(n) {
-    index += n;
-    changeSlide();
-}
-
-changeSlide();
-
-function changeSlide() {
-
-    if (index > slides.length - 1)
-        index = 0;
-
-    if (index < 0)
-        index = slides.length - 1;
-
-
-
-    for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-
-        dots[i].classList.remove("active");
-
-
-    }
-
-    slides[index].style.display = "block";
-    dots[index].classList.add("active");
-}
-// auto slide
-setInterval(function() {
-    nextSlide(1);
-}, 5000);
-</script>
+    <!-- Initialize Swiper -->
+    <script>
+      const progressCircle = document.querySelector(".autoplay-progress svg");
+      const progressContent = document.querySelector(".autoplay-progress span");
+      var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        on: {
+          autoplayTimeLeft(s, time, progress) {
+            progressCircle.style.setProperty("--progress", 1 - progress);
+            progressContent.textContent = `${Math.ceil(time / 1000)}s`;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -52,34 +52,8 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">New
-                        Products</h3>
-                    <div class="section-nav">
-
-                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500"
-                            data-aos-easing="ease-in-sine">
-
-
-                            <?php foreach($getAllManufacture  as $key => $value): 
-											if($key == 0):
-			
-											?>
-
-                            <li class="active"><a href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>">
-                                    <?php echo $value['manu_name']; ?>
-                                    <?php endif; endforeach; ?>
-
-                                </a></li>
-
-
-                            <?php foreach($getAllManufacture  as $value): ?>
-                            <?php if($value['manu_id'] != 4):  ?>
-                            <li><a
-                                    href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>"><?php echo $value['manu_name']?></a>
-                            </li>
-                            <?php endif; endforeach ?>
-                        </ul>
-                    </div>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Top
+                        Selling</h3>
                 </div>
             </div>
             <!-- /section title -->
@@ -96,15 +70,15 @@
 
                                 <?php 
 										foreach($getAllProducts as $value):
+                                            if ($value['feature'] == 1) :
 										?>
                                 <div class="product">
                                     <div class="product-img">
                                         <img src="./img/<?php echo $value['image'] ?>" alt="">
                                         <div class="product-label">
                                             <?php if ($value['feature'] == 1): ?>
-                                            <span class="sale">-30%</span>
+                                            <span class="sale">Top Selling</span>
                                             <?php endif ?>
-                                            <span class="new">NEW</span>
                                         </div>
                                     </div>
 
@@ -140,7 +114,11 @@
                                     </div>
                                 </div>
 
-                                <?php endforeach ?>
+                                <?php
+                                            endif;
+                                        endforeach
+                                        ?>
+
 
                                 <!-- /product -->
 
@@ -217,33 +195,8 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Top
-                        sellinga</h3>
-                    <div class="section-nav">
-                        <ul class="section-tab-nav tab-nav" data-aos="fade-left" data-aos-offset="500"
-                            data-aos-easing="ease-in-sine">
-
-
-                            <?php foreach($getAllManufacture  as $key => $value): 
-								if($key == 0):
-
-								?>
-                            <li class="active"><a href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>">
-                                    <?php echo $value['manu_name']; ?>
-                                    <?php endif; endforeach; ?>
-
-                                </a></li>
-
-
-                            <?php foreach($getAllManufacture  as $value): ?>
-                            <?php if($value['manu_id'] != 4):  ?>
-                            <li><a
-                                    href="tab_product.php?manu_id=<?php echo $value['manu_id'] ?>"><?php echo $value['manu_name']?></a>
-                            </li>
-                            <?php endif; endforeach ?>
-
-                        </ul>
-                    </div>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Điện
+                        Thoại</h3>
                 </div>
             </div>
             <!-- /section title -->
@@ -258,6 +211,7 @@
                                 <!-- product -->
                                 <?php 
 										foreach($getAllProducts as $value):
+                                            if ($value['type_id'] == 1) :
 										?>
                                 <div class="product">
                                     <div class="product-img">
@@ -269,11 +223,6 @@
 
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
-
-
-
-
-
                                         <h3 class="product-name"><a href="#"><?php echo $value['name'] ?></a></h3>
                                         <h4 class="product-price"> <?php echo number_format($value['price'])  ?> VND
                                         </h4>
@@ -299,10 +248,10 @@
                                                 cart</a></button>
                                     </div>
                                 </div>
-
-                                <?php endforeach ?>
-
-
+                                <?php 
+                                            endif;
+                                        endforeach
+                                        ?>
                             </div>
                             <div id="slick-nav-2" class="products-slick-nav"></div>
                         </div>
@@ -326,7 +275,7 @@
         <div class="grid grid-rows-3">
             <div class="col-md-4 col-xs-6">
                 <div class="section-title">
-                    <h4 class="title">Top sellingb</h4>
+                    <h4 class="title">Máy tính bảng</h4>
                     <div class="section-nav">
                         <div id="slick-nav-3" class="products-slick-nav"></div>
                     </div>
@@ -336,9 +285,9 @@
 
                     <!-- product widget -->
 
-                    <?php foreach ($getAllProductsLimit1  as $key => $value):?>
+                    <?php foreach ($getAllProducts as $value):?>
+                    <?php if ($value['type_id'] == 3):?>
                     <?php if ($key % 3 == 0) echo "<div>"; ?>
-
 
                     <div class="product-widget">
                         <div class="product-img">
@@ -352,7 +301,9 @@
                         </div>
                     </div>
                     <?php if($key % 3 == 2) echo "</div>" ?>
-                    <?php  endforeach; ?>
+                    <?php 
+                                            endif;
+                endforeach; ?>
                     <!-- /product widget -->
 
                 </div>
@@ -360,7 +311,7 @@
 
             <div class="col-md-4 col-xs-6">
                 <div class="section-title">
-                    <h4 class="title">Top sellingc</h4>
+                    <h4 class="title">Tivi</h4>
                     <div class="section-nav">
                         <div id="slick-nav-4" class="products-slick-nav"></div>
                     </div>
@@ -369,9 +320,9 @@
                 <div class="products-widget-slick" data-nav="#slick-nav-4">
 
                     <!-- product widget -->
-                    <?php foreach ($getAllProductsLimit2  as $key => $value):?>
+                    <?php foreach ($getAllProducts as $key => $value):?>
+                        <?php if ($value['type_id'] == 4):?>
                     <?php if ($key % 3 == 0) echo "<div>"; ?>
-
 
                     <div class="product-widget">
                         <div class="product-img">
@@ -385,22 +336,24 @@
                         </div>
                     </div>
                     <?php if($key % 3 == 2) echo "</div>" ?>
-                    <?php  endforeach; ?>
+                    <?php 
+                        endif;
+                        endforeach; ?>
                 </div>
             </div>
 
             <div class="col-md-4 col-xs-6">
                 <div class="section-title">
-                    <h4 class="title">Top sellingd</h4>
+                    <h4 class="title">Macbook Pro</h4>
                     <div class="section-nav">
                         <div id="slick-nav-5" class="products-slick-nav"></div>
                     </div>
                 </div>
 
                 <div class="products-widget-slick" data-nav="#slick-nav-5">
-                    <?php foreach ($getAllProductsLimit1  as $key => $value):?>
+                    <?php foreach ($getAllProducts  as $value):?>
+                        <?php if ($value['type_id'] == 13):?>
                     <?php if ($key % 3 == 0) echo "<div>"; ?>
-
 
                     <div class="product-widget">
                         <div class="product-img">
@@ -414,7 +367,9 @@
                         </div>
                     </div>
                     <?php if($key % 3 == 2) echo "</div>" ?>
-                    <?php  endforeach; ?>
+                    <?php  
+                        endif;
+                endforeach; ?>
                     <!-- /product widget -->
 
 

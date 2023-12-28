@@ -13,10 +13,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Create an instance of the Product class
         $product = new Product();
         $productData = $product->getAllProductsById(intval($id));
-        
+
+        // Get all image paths
+        $imagePaths = explode(',', $productData->image);
+
         // Delete the product from the database
         $deleteResult = $product->deleteProducts($id);
-        unlink($productData->image);
+
+        // Delete all images
+        foreach ($imagePaths as $imagePath) {
+            $imagePath = trim($imagePath); // Remove any whitespace
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
 
         // Check if the deletion was successful
         if ($deleteResult) {

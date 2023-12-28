@@ -30,7 +30,7 @@
     
     if (isset($_SESSION['load_home_page']) && isset($_SESSION['time_start'])) {
         $time = time() - $_SESSION['time_start'];
-        if ($time > 5) {
+        if ($time >= 5) {
             unset($_SESSION['load_home_page'], $_SESSION['time_start']);
         }
     } else {

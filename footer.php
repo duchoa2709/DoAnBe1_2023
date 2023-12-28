@@ -102,7 +102,7 @@
     </div>
     <!-- /top footer -->
 
-	<!-- Messenger Plugin chat Code -->
+    <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 
     <!-- Your Plugin chat code -->
@@ -110,31 +110,32 @@
     </div>
 
     <script>
-      var chatbox = document.getElementById('fb-customer-chat');
-      chatbox.setAttribute("page_id", "100347412526485");
-      chatbox.setAttribute("attribution", "biz_inbox");
+    var chatbox = document.getElementById('fb-customer-chat');
+    chatbox.setAttribute("page_id", "100347412526485");
+    chatbox.setAttribute("attribution", "biz_inbox");
     </script>
 
     <!-- Your SDK code -->
     <script>
-      window.fbAsyncInit = function() {
+    window.fbAsyncInit = function() {
         FB.init({
-          xfbml            : true,
-          version          : 'v18.0'
+            xfbml: true,
+            version: 'v18.0'
         });
-      };
+    };
 
-      (function(d, s, id) {
+    (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
+        js = d.createElement(s);
+        js.id = id;
         js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
         fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+    }(document, 'script', 'facebook-jssdk'));
     </script>
 
-	<!--End Messenger Plugin chat Code -->
-	
+    <!--End Messenger Plugin chat Code -->
+
     <div class="phone_zalo">
         <div class="zalo">
 

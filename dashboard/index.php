@@ -5,6 +5,13 @@
 	require "models/manufacture.php";
 	require "models/products.php";
 
+
+    if ($_SESSION['roles'] != "admin") {
+        header("location:./component/401.php");
+        exit();
+    }
+
+
 	$protypes = new Protypes;
 				$getAllprotypes = $protypes->getAllprotypes();
 
@@ -34,6 +41,9 @@
                               
                 $number_type = $count_type[0]['number'];
           }
+
+
+
 ?>
 <?php
     include('./component/flashArtDoashboard.php');

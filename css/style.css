@@ -2419,6 +2419,7 @@ textarea.input {
     bottom: 0;
     right: 0;
     margin-bottom: 20px;
+    z-index: 999;
 }
 
 .phone_zalo .zalo img {

@@ -36,14 +36,15 @@
 </head>
 
 <style>
-    .active {
-        color:#007bff;
-    }
+.active {
+    color: #007bff;
+}
 </style>
 
 <body class="hold-transition sidebar-mini">
     <!-- Main Sidebar Container -->
-    <aside class=" h-[100%] bg-[#343a40] min-h-screen flex-shrink-0 hidden w-64 border-r dark:border-primary-darker dark:bg-darker md:block">
+    <aside
+        class=" h-[100%] bg-[#343a40] min-h-screen flex-shrink-0 hidden w-64 border-r dark:border-primary-darker dark:bg-darker md:block">
         <!-- Brand Logo -->
         <a href="index.php" class="brand-link">
             <img src="./dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
@@ -59,7 +60,16 @@
                     <img src="./dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block text-white">Phan Đức Hòa</a>
+                    <a href="#" class="d-block text-white"> 
+                        <?php if( isset($_SESSION['user'])  )
+							{
+								echo $_SESSION['user'];
+							}
+							else{
+								echo "My Account";
+							}
+                        ?>
+                    </a>
                 </div>
             </div>
 

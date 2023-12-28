@@ -38,44 +38,37 @@ if(isset($_POST['submit'])){
     $manu_id = $_POST['manu_id'];
     $type_id = $_POST['type_id'];
     $price = $_POST['price'];
-    // $img = $_POST['image'];
     $description = $_POST['description'];
-    // $feature = $_POST['feature'];
     $feature = isset($_POST['feature']) ? 1 : 0;
     $created_at = date('Y-m-d h:i:s', time());
 
-    if(isset($_FILES['image']['name']) && $_FILES['image']['name'] == null){
-        $product_photo = $productData->image;
-    }
-    else {
-        //xóa file cũ
-        unlink($productData->image);
-        // Thêm thời gian vào tên file
-        $timestamp = time();
-        $file_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $file_name = $timestamp .'_' .$_FILES['image']['name']. '.' . $file_extension;
-    
-        $product_photo = '../public/upload/' . $file_name;
-    
-        if( is_uploaded_file($_FILES['image']['tmp_name']) &&
-            move_uploaded_file($_FILES['image']['tmp_name'], $product_photo)) {
-                // Upload thành công thì thêm vào db;
-                if($updateproduct = $product->updateProducts( $id , $name , $manu_id , $type_id , $price , $product_photo , $description , $feature , $created_at )) {
-                    $_SESSION['nofication'] = "Sửa thành công";
-                    header('location: Products.php');
-                }
-                else {
-                    $_SESSION['error'] = "File Lỗi";
-                }
-        } else {
-            $_SESSION['error'] = "Vui lòng chọn hình ảnh";
+    $file_names = array();
+    if(isset($_FILES['images'])){
+        $file_names = array();
+        foreach($_FILES['images']['tmp_name'] as $key => $tmp_name){
+            // Process each uploaded file
+            // For example, move the file to your uploads directory:
+            $timestamp = time();
+            $file_extension = pathinfo($_FILES['images']['name'][$key], PATHINFO_EXTENSION);
+            $file_name = $timestamp .'_' .$_FILES['images']['name'][$key]. '.' . $file_extension;
+            $product_photo = '../public/upload/' . $file_name;
+            if( is_uploaded_file($_FILES['images']['tmp_name'][$key]) &&
+                move_uploaded_file($_FILES['images']['tmp_name'][$key], $product_photo)) {
+                    // Upload thành công thì thêm vào db;
+                    array_push($file_names, $product_photo);
+            } else {
+                $_SESSION['error'] = "Vui lòng chọn hình ảnh";
+            }
         }
-    }
-    
-        if($updateproduct = $product->updateProducts( $id , $name , $manu_id , $type_id , $price , $product_photo , $description , $feature , $created_at )) {
+        // Now $file_names contains all the paths of the uploaded files
+        // Convert the array to a string
+        $file_names_string = implode(",", $file_names);
+        // You can now use this string to update your product
+        if($updateproduct = $product->updateProducts( $id , $name , $manu_id , $type_id , $price , $file_names_string , $description , $feature , $created_at )) {
             $_SESSION['nofication'] = "Sửa thành công";
             header('location: Products.php');
         }
+    }
 }
 ?>
 
@@ -120,9 +113,9 @@ if(isset($_POST['submit'])){
                             </div>
                         </div>
                     </div>
-                    <input id="image" type="file" name="image" accept="image/*" onchange="loadFile(event)"
-                        class=" p-2 block h-12 w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-white  focus:outline-none border-gray-600 placeholder-gray-400"
-                        aria-describedby="user_avatar_help">
+                    <input id="image" type="file" name="images[]" accept="image/*" onchange="loadFile(event)"
+                        class="p-2 block h-12 w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-white focus:outline-none border-gray-600 placeholder-gray-400"
+                        aria-describedby="user_avatar_help" multiple>
                 </div>
                 <div class="mt-1 text-sm text-black" id="user_avatar_help">Tải hình ảnh sản phẩm lên</div>
             </div>

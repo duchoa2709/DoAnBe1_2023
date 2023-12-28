@@ -146,12 +146,5 @@ public function searchAndType($key, $type_id) {
     return $rows;
 }
 
-
-
-
-
-
-
-
 }
 ?>

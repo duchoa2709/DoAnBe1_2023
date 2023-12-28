@@ -5,13 +5,6 @@ require_once "models/products.php";
 $cartProduct= new Product();
 $cartgetAllProducts = $cartProduct->getAllProducts();
 
-
-
-
-
-
-
-
 if( isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add_to_cart')
 {
     $sl = 1;
@@ -27,21 +20,23 @@ if( isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add_to_c
     else{
         $_SESSION['cart'][$id]['soluong'] = $sl;
     }
-    
+
+        // Redirect to a default page if HTTP_REFERER is not set
+      
 }
 $count = 0;
 
 if(isset($_SESSION['cart'])){
     foreach($_SESSION['cart'] as $key => $value) : 
-
+        
         foreach($cartgetAllProducts as $sp):
             if($key == $sp['id']):
                 $count++;
-        
-             endif ; endforeach; endforeach; 
-
-}
-?>
+                
+                endif ; endforeach; endforeach; 
+                
+            }
+            ?>
 
 <style>
 .delete a {

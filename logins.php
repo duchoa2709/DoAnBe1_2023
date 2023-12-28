@@ -3,7 +3,7 @@ session_start();
 require "config.php";
 require "models/db.php";
 require "models/user.php";
-
+$user = new User();
 ?>
 
 
@@ -83,9 +83,9 @@ require "models/user.php";
                                 $_SESSION['roles'] = $result;
                                 $_SESSION['user'] = $username;
                         
-                                if ($result == 1) {
-                                    header("location:\AdminLTE-3\index.php");
-                                } else if ($result == 0) {
+                                if ($result == "admin") {
+                                    header("location:.\dashboard\index.php");
+                                } else if ($result == "user") {
                                     header("location:index.php");
                                 }
                             } else {

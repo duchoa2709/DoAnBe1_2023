@@ -302,7 +302,7 @@
                                         </button>
                                     </a>
 
-                                    <form action="del_product.php" method="post">
+                                    <form action="del_product.php" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?')" class="m-0 p-0">
                                         <!-- Add a hidden input field to store the product ID -->
                                         <input type="hidden" name="id" value="<?php echo $product['id'] ?>" />
 

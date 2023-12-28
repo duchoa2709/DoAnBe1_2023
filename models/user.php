@@ -1,25 +1,22 @@
 <?php
 class User extends DB{
 
-    public function checkLogon($user , $password)
+    public function checkLogon($username, $hashedPassword)
     {
         $sql = self::$connection->prepare("SELECT * FROM user WHERE user = ? AND password = ?");
-        $password = md5($password);
-        $sql->bind_param("ss", $user, $password);
-        $sql->execute(); // Thực thi câu truy vấn
+        $sql->bind_param("ss", $username, $hashedPassword);
+        $sql->execute();
         $result = $sql->get_result();
 
-        if ($result->num_rows == 1) {
-            // Đăng nhập thành công
-            $row = $result->fetch_assoc( q); // Lấy dòng dữ liệu
-            $roles = $row['roles']; // Lấy giá trị của trường 'roles'
-            
-            return $roles;
+        if ($result->num_rows > 0) {
+            // Login successful
+            $user = $result->fetch_object();
+            return $user->role; // Return the user's role
         } else {
-            // Đăng nhập thất bại
+            // Login failed
             return false;
         }
-    }    
+    } 
 
     public function getAllAdmin ()
     {

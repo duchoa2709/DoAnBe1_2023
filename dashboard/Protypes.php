@@ -184,7 +184,7 @@
                                         </button>
                                     </a>
 
-                                    <form action="./del_protypes.php" method="post">
+                                    <form action="./del_protypes.php" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa không?')"> 
                                         <!-- Add a hidden input field to store the product ID -->
                                         <input type="hidden" name="id" value="<?php echo $protypes['type_id'] ?>">
 

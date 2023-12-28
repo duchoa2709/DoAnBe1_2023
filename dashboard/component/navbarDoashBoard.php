@@ -16,7 +16,7 @@
 
         <a href="#" class="inline-block text-2xl font-bold tracking-wider uppercase text-primary-dark dark:text-light"
             id="pageTitleLink">
-            Pizza Store
+            Dashboard
         </a>
 
         <script>

@@ -1,21 +1,37 @@
 <?php 
-			require "config.php";
-			require "models/db.php";
-			require "models/protypes.php";
-			require "models/manufacture.php";
-			require "models/products.php";
-			$product= new Product;
-				$getAllProducts = $product->getAllProducts();
-				$getAllProductslimit4 = $product->getAllProductslimit4();
+    require "config.php";
+    require "models/db.php";
+    require "models/protypes.php";
+    require "models/manufacture.php";
+    require "models/products.php";
+    $product= new Product;
+    $getAllProducts = $product->getAllProducts();
+    $getAllProductslimit4 = $product->getAllProductslimit4();
+    
+    $protypes = new Protypes;
+    $getAllprotypes = $protypes->getAllprotypes();
+        
+    if(isset($_GET['id']))
+    {
+        $id = $_GET['id'];
 
-				$protypes = new Protypes;
-				$getAllprotypes = $protypes->getAllprotypes();
-
-				if(isset($_GET['id']))
-				{
-					$id = $_GET['id'];
-				}			
-				
+        // Assuming $id is the ID of the product the user is viewing
+        if (!isset($_COOKIE['recent_views'])) {
+            $recent_views = array();
+        } else {
+            $recent_views = explode(',', $_COOKIE['recent_views']);
+        }
+        // Check if product id already exists in the array
+        if (($key = array_search($id, $recent_views)) !== false) {
+            // Remove existing product id from the array
+            unset($recent_views[$key]);
+        }
+        // Add product id to the beginning of the array
+        array_unshift($recent_views, $id);
+        // Limit the size of the array to the most recent 5 items
+        $recent_views = array_slice($recent_views, 0, 5);
+        setcookie('recent_views', implode(',', $recent_views), time() + (86400 * 30), "/"); // 86400 = 1 day
+    }
 ?>
 
 <!-- /BREADCRUMB -->
@@ -51,7 +67,7 @@
             <!-- Product thumb imgs -->
             <div class="col-md-2  col-md-pull-5">
                 <div id="product-imgs">
-                        <?php
+                    <?php
 							// Split the image string into an array
 							$images = explode(",", $value['image']);
 							foreach($images as $image): 
@@ -59,7 +75,7 @@
                     <div class="product-preview">
                         <img src="./img/<?php echo $image ?>" alt="">
                     </div>
-					<?php endforeach; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
             <!-- /Product thumb imgs -->
@@ -93,7 +109,7 @@
 
                     <div class="product-options">
                         <label>
-                            Size 
+                            Size
                             <select class="input-select">
                                 <option value="0">Chưa phát triển</option>
                             </select>

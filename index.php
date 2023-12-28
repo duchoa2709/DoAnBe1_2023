@@ -44,6 +44,116 @@
     include('component/slidebanner.php');
 ?>
 
+<?php 
+if (isset($_COOKIE['recent_views'])) :
+?>
+
+<!-- SECTION -->
+<div class="section" style="margin-top: 50px;">
+    <!-- container -->
+    <div class="container">
+        <!-- Recently Viewed Products -->
+
+        <div class="row">
+            <!-- section title -->
+            <div class="col-md-12">
+                <div class="section-title">
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">Recent
+                        Views</h3>
+                </div>
+            </div>
+            <!-- /section title -->
+
+            <!-- Products tab & slick -->
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="products-tabs" data-aos="fade-up" data-aos-offset="500" data-aos-easing="ease-in-sine">
+                        <!-- tab -->
+                        <div id="tab1" class="tab-pane active">
+
+                            <div class="products-slick" data-nav="#slick-nav-1">
+                                <!-- product -->
+                                <?php
+                                    
+                                        $recent_view_ids = explode(',', $_COOKIE['recent_views']);
+                                        // Use $recent_view_ids to get product information
+                                        foreach ($recent_view_ids as $id) :
+                                            $product_info = $product->getAllProductsById($id);
+                                ?>
+                                <div class="product">
+                                    <div class="product-img">
+                                        <?php
+                                            // Chia chuỗi hình ảnh thành một mảng
+                                            $images = explode(",", $product_info->image);
+                                            // Lấy hình ảnh đầu tiên
+                                            $firstImage = $images[0];
+                                        ?>
+                                        <img src="./img/<?php echo $firstImage ?>" alt="">
+                                        <div class="product-label">
+                                            <?php if ($product_info->feature == 1): ?>
+                                            <span class="sale">Top Selling</span>
+                                            <?php endif ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="product-body">
+                                        <p class="product-category">Category</p>
+                                        <h3 class="product-name"><a
+                                                href="product.php?id=<?php echo $product_info->id ?>"><?php echo $product_info->name; ?></a>
+                                        </h3>
+                                        <h4 class="product-price"> <?php echo number_format($product_info->price)  ?>
+                                            VND
+                                        </h4>
+                                        <div class="product-rating">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                        <div class="product-btns">
+                                            <button class="add-to-wishlist"> <a
+                                                    href="addwishlist.php?id=<?php echo $product_info->id; ?>"><i
+                                                        class="fa fa-heart-o"></i></a> <span class="tooltipp">add to
+                                                    wishlist</span></button>
+                                            <button class="add-to-compare"><i class="fa fa-exchange"></i><span
+                                                    class="tooltipp">add to compare</span></button>
+                                            <button class="quick-view"><a
+                                                    href="product.php?id=<?php echo $product_info->id?>"><i
+                                                        class="fa fa-eye"></i></a> <span class="tooltipp"> quick
+                                                    view</span></button>
+                                        </div>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <a
+                                                href="?action=add_to_cart&id=<?php echo $product_info->id ?>">add to
+                                                cart</a></button>
+                                    </div>
+                                </div>
+                                <!-- /product -->
+                                <?php
+                                        endforeach;
+                                ?>
+                                <div id="slick-nav-1" class="products-slick-nav"></div>
+                            </div>
+                        </div>
+                        <!-- /tab -->
+                    </div>
+                </div>
+            </div>
+            <!-- Products tab & slick -->
+        </div>
+
+        <!-- /Recently Viewed Products -->
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+
+<?php
+    endif;
+?>
+
 <!-- SECTION -->
 <div class="section" style="margin-top: 50px;">
     <!-- container -->
@@ -71,20 +181,20 @@
                                 <!-- product -->
 
                                 <?php 
-										foreach($getAllProducts as $value):
-                                            if ($value['feature'] == 1) :
+										foreach($getAllProducts as $product_info):
+                                            if ($product_info['feature'] == 1) :
 										?>
                                 <div class="product">
                                     <div class="product-img">
                                         <?php
                                         // Chia chuỗi hình ảnh thành một mảng
-                                        $images = explode(",", $value['image']);
+                                        $images = explode(",", $product_info['image']);
                                         // Lấy hình ảnh đầu tiên
                                         $firstImage = $images[0];
                                         ?>
                                         <img src="./img/<?php echo $firstImage ?>" alt="">
                                         <div class="product-label">
-                                            <?php if ($value['feature'] == 1): ?>
+                                            <?php if ($product_info['feature'] == 1): ?>
                                             <span class="sale">Top Selling</span>
                                             <?php endif ?>
                                         </div>
@@ -93,9 +203,10 @@
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
                                         <h3 class="product-name"><a
-                                                href="product.php?id=<?php echo $value['id'] ?>"><?php echo $value['name']; ?></a>
+                                                href="product.php?id=<?php echo $product_info['id'] ?>"><?php echo $product_info['name']; ?></a>
                                         </h3>
-                                        <h4 class="product-price"> <?php echo number_format($value['price'])  ?> VND
+                                        <h4 class="product-price"> <?php echo number_format($product_info['price'])  ?>
+                                            VND
                                         </h4>
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
@@ -106,20 +217,20 @@
                                         </div>
                                         <div class="product-btns">
                                             <button class="add-to-wishlist"> <a
-                                                    href="addwishlist.php?id=<?php echo $value['id']; ?>"><i
+                                                    href="addwishlist.php?id=<?php echo $product_info['id']; ?>"><i
                                                         class="fa fa-heart-o"></i></a> <span class="tooltipp">add to
                                                     wishlist</span></button>
                                             <button class="add-to-compare"><i class="fa fa-exchange"></i><span
                                                     class="tooltipp">add to compare</span></button>
                                             <button class="quick-view"><a
-                                                    href="product.php?id=<?php echo $value['id'] ?>"><i
+                                                    href="product.php?id=<?php echo $product_info['id'] ?>"><i
                                                         class="fa fa-eye"></i></a> <span class="tooltipp"> quick
                                                     view</span></button>
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
                                         <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> <a
-                                                href="?action=add_to_cart&id=<?php echo $value['id'] ?>">add to
+                                                href="?action=add_to_cart&id=<?php echo $product_info['id'] ?>">add to
                                                 cart</a></button>
                                     </div>
                                 </div>
@@ -207,7 +318,8 @@
             <!-- section title -->
             <div class="col-md-12">
                 <div class="section-title">
-                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine"><?php echo $protype['type_name'] ?></h3>
+                    <h3 class="title" data-aos="fade-right" data-aos-offset="500" data-aos-easing="ease-in-sine">
+                        <?php echo $protype['type_name'] ?></h3>
                 </div>
             </div>
             <!-- /section title -->
@@ -311,7 +423,6 @@
 
 <script>
 AOS.init();
-
 </script>
 </body>
 

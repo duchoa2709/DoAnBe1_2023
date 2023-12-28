@@ -4,7 +4,6 @@ require_once "models/db.php";;
 require_once "models/products.php";
 $cartProduct= new Product();
 $cartgetAllProducts = $cartProduct->getAllProducts();
-
 if( isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add_to_cart')
 {
     $sl = 1;
@@ -21,8 +20,9 @@ if( isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'add_to_c
         $_SESSION['cart'][$id]['soluong'] = $sl;
     }
 
-        // Redirect to a default page if HTTP_REFERER is not set
-      
+    // Tải lại trang bằng JavaScript
+    echo "<script>location.href = '".$_SERVER['PHP_SELF']."';</script>";
+    exit;
 }
 $count = 0;
 
@@ -36,7 +36,7 @@ if(isset($_SESSION['cart'])){
                 endif ; endforeach; endforeach; 
                 
             }
-            ?>
+?>
 
 <style>
 .delete a {
@@ -88,3 +88,4 @@ if(isset($_SESSION['cart'])){
         <a href="checkout.php">Checkout <i class="fa fa-arrow-circle-right"></i></a>
     </div>
 </div>
+

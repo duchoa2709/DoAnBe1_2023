@@ -100,8 +100,8 @@ $user = new User();
                         </button>
                     </div>
                     <div class="text-center p-t-90">
-                        <a class="txt1" href="#">
-                            Forgot Password? comingsonn
+                        <a class="txt1" href="Register.php">
+                            Bạn không có tài khoản? Đăng ký ngay!
                         </a>
                     </div>
                 </form>

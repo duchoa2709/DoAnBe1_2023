@@ -52,8 +52,8 @@ $getAllprotypes = $protypes->getAllprotypes();
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-        <!-- jquery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
@@ -77,7 +77,7 @@ $getAllprotypes = $protypes->getAllprotypes();
         scrollbar-width: thin;
         scrollbar-color: darkgrey slategrey;
     }
-</style>
+    </style>
 </head>
 
 <body>
@@ -136,7 +136,7 @@ $getAllprotypes = $protypes->getAllprotypes();
                         <div class="header-logo">
                             <a href="index.php" class="logo">
                                 <img src="./img/logo.png" alt="">
-                                
+
                             </a>
                         </div>
                     </div>

@@ -6,9 +6,5 @@ $user= new User();
 
 
 $inserdata = $user->InsertData($_GET['user'] , $_GET['pwd']);
-//header('location:logins.php');
-
-
-
-
+header('location:logins.php');
 ?>

@@ -104,7 +104,7 @@
                         <h3 class="product-price"><?php echo number_format( $value['price']) ?> VND</h3>
                         <span class="product-available">In Stock</span>
                     </div>
-                    <p><?php echo $value['description'] ?></p>
+                    
 
 
                     <div class="product-options">
@@ -147,7 +147,7 @@
 
 
 
-                        <?php  endif; endforeach; ?>
+                        
 
                     </div>
 
@@ -192,8 +192,7 @@
                         <div id="tab1" class="tab-pane fade in active">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p>jknjnkjbnkjbjh
-                                    </p>
+                                <p><?php echo $value['description'] ?></p>
                                 </div>
                             </div>
                         </div>
@@ -478,14 +477,14 @@
             <!-- product -->
 
             <!-- /product -->
-
+            
         </div>
         <!-- /row -->
     </div>
     <!-- /container -->
 </div>
 <!-- /Section -->
-
+<?php  endif; endforeach; ?>
 <!-- NEWSLETTER -->
 <?php include('footer.php') ?>
 <!-- /FOOTER -->

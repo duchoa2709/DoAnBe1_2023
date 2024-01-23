@@ -100,6 +100,7 @@ if ($search == '') {
 
 
 <body>
+    
     <div class="div flex">
         <div class="w-1/7">
             <?php
